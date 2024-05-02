@@ -1,4 +1,4 @@
-package com.example.jetsetgo_back;
+package kr.co.jetsetgo;
 
 import com.google.gson.Gson;
 import org.json.JSONObject;
