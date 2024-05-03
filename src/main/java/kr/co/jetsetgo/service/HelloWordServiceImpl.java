@@ -12,4 +12,12 @@ public class HelloWordServiceImpl implements HelloWordService {
 
         return data+"Hello World";
     }
+
+    public String HelloWorld3(String data2) {
+        return "연습연습연습";
+    }
+
+    public String Test(String test) {
+        return test+"유정아사랑해^3^";
+    }
 }

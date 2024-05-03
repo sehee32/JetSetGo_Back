@@ -17,7 +17,7 @@ public class HelloWordController {
 
     /**
      * Sample Controller
-     * 호출 예시 : http://localhost:8000/api/Hello?data=호출테스트
+     * 호출 예시 : http://localhost:8080/api/Hello?data=호출테스트
      * 결과 : 호출테스트 Hello Word
      * @param data
      * @return
@@ -32,5 +32,15 @@ public class HelloWordController {
     public String helloWorld2() throws IOException {
 
         return ApiUtil.getToken();
+    }
+
+    @GetMapping(value = "/Hello3")
+    public String HelloWorld3(@RequestParam String data2) {
+        return helloWordService.HelloWorld3(data2);
+    }
+
+    @GetMapping(value = "/TestPage")
+    public String Test(@RequestParam String test) {
+        return helloWordService.Test(test);
     }
 }
