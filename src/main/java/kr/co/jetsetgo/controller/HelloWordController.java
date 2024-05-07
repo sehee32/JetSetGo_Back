@@ -43,4 +43,11 @@ public class HelloWordController {
     public String Test(@RequestParam String test) {
         return helloWordService.Test(test);
     }
+
+    @GetMapping("/HelloYuri")
+    public String HelloYuri(@RequestParam String name){
+
+        return helloWordService.helloName(name);
+    }
+
 }
