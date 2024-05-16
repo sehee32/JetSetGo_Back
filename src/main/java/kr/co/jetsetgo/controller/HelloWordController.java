@@ -1,7 +1,6 @@
 package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.ApiUtil;
-import kr.co.jetsetgo.model.ResponseDto;
 import kr.co.jetsetgo.service.HelloWordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +18,7 @@ public class HelloWordController {
      * Sample Controller
      * 호출 예시 : http://localhost:8080/api/Hello?data=호출테스트
      * 결과 : 호출테스트 Hello Word
+     *
      * @param data
      * @return
      */
@@ -44,5 +44,16 @@ public class HelloWordController {
         return helloWordService.Test(test);
     }
 
+    @GetMapping("/HelloYuri")
+    public String HelloYuri(@RequestParam String name) {
 
+        return helloWordService.helloName(name);
+    }
+
+    //1:1문의 검색
+    @PostMapping(value = "/supportSearch", produces = "text/plain; charset=utf-8")
+    public String supportSearch(@RequestBody (required = false) String data) {
+//        System.out.println("전송 받은 데이터: " + data);
+        return data;
+    }
 }

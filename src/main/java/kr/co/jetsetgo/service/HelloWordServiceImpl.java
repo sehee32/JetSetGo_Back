@@ -21,4 +21,8 @@ public class HelloWordServiceImpl implements HelloWordService {
 
         return test+"유정아사랑해^3^";
     }
+
+    public String helloName(String name) {
+        return "안녕하세요 " + name +" 님^^♡";
+    }
 }
