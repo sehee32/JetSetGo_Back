@@ -18,6 +18,7 @@ public class HelloWordServiceImpl implements HelloWordService {
     }
 
     public String Test(String test) {
+
         return test+"유정아사랑해^3^";
     }
 }
