@@ -50,10 +50,5 @@ public class HelloWordController {
         return helloWordService.helloName(name);
     }
 
-    //1:1문의 검색
-    @PostMapping(value = "/supportSearch", produces = "text/plain; charset=utf-8")
-    public String supportSearch(@RequestBody (required = false) String data) {
-//        System.out.println("전송 받은 데이터: " + data);
-        return data;
-    }
+
 }
