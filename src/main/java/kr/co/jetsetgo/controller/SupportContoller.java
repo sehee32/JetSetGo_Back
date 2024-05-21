@@ -33,17 +33,17 @@ public class SupportContoller {
         System.out.println("전송 받은 데이터: " + data);
         // data에 해당하는 값 받아옴
         List<SupportDTO> searchResults = new ArrayList<>();
-        searchResults.add(new SupportDTO(1, 101, "확인용:"+data, "작성자1", "2024-05-21", "답변1", true));
-        searchResults.add(new SupportDTO(2, 102, "제목2", "작성자2","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(3, 103, "제목3", "작성자3","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(4, 104, "제목4", "작성자4","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(5, 105, "제목5", "작성자5","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(6, 106, "제목6", "작성자6","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(7, 107, "제목7", "작성자7","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(8, 108, "제목8", "작성자8","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(9, 109, "제목9", "작성자9","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(10, 110, "제목10", "작성자10","2024-05-21", "답변2", true));
-        searchResults.add(new SupportDTO(11, 111, "제목11", "작성자11","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(1, 101, "확인용:"+data, "내용", "작성자1", "2024-05-21", "답변1", true));
+        searchResults.add(new SupportDTO(2, 102, "제목2", "내용", "작성자2","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(3, 103, "제목3", "내용", "작성자3","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(4, 104, "제목4", "내용", "작성자4","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(5, 105, "제목5", "내용", "작성자5","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(6, 106, "제목6", "내용", "작성자6","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(7, 107, "제목7", "내용", "작성자7","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(8, 108, "제목8", "내용", "작성자8","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(9, 109, "제목9", "내용", "작성자9","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(10, 110, "제목10", "내용", "작성자10","2024-05-21", "답변2", true));
+        searchResults.add(new SupportDTO(11, 111, "제목11", "내용", "작성자11","2024-05-21", "답변2", true));
 
 //        System.out.println(searchResults);
         return searchResults;
