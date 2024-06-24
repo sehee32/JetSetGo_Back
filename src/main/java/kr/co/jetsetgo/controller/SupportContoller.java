@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,7 +29,7 @@ public class SupportContoller {
     //1:1문의 검색
     @PostMapping(value = "/supportSearch", produces = "application/json; charset=utf-8")
     public List<SupportDTO> supportSearch(@RequestBody(required = false) String data) {
-        System.out.println("전송 받은 데이터: " + data);
+        System.out.println("1:1문의 검색: " + data);
         // data에 해당하는 값 받아옴
         List<SupportDTO> searchResults = new ArrayList<>();
         searchResults.add(new SupportDTO(1, 101, "확인용:"+data, "내용", "작성자1", "2024-05-21", "답변1", true));
@@ -47,6 +46,14 @@ public class SupportContoller {
 
         System.out.println(searchResults);
         return searchResults;
+    }
+
+    //문의하기 추가
+    @PostMapping(value = "/supportAdd", produces = "application/json; charset=utf-8")
+    public boolean supportAdd(@RequestBody(required = false) String data) {
+        System.out.println("문의하기: " + data);
+        // data에 해당하는 값 받아옴
+        return true;
     }
 
 }
