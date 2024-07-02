@@ -1,6 +1,5 @@
 package kr.co.jetsetgo.model;
 
-
 public class ResponseDto<T> {
 
 	private String code		= "S";
@@ -17,9 +16,7 @@ public class ResponseDto<T> {
 	}
 	
 	public ResponseDto(Exception e) {
-//		this.code		= e.getCode();
-//		this.msg		= e.getMsg();
-//		this.detailMsg	= e.getDetailMsg();
+
 	}
 	
 	public String getCode() {
