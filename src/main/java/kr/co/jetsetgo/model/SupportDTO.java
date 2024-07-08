@@ -3,6 +3,7 @@ package kr.co.jetsetgo.model;
 public class SupportDTO {
 
     private int supportNum;    // 문의번호
+    private int authorNum;     // 작성자 번호
     private int num;               // 번호
     private String title;         // 제목
     private String detail;        // 내용
@@ -10,14 +11,16 @@ public class SupportDTO {
     private String createdDate;     // 작성일
     private String answer;        // 답변
     private boolean isPublic;     // 공개여부
+    private String category;      // 카테고리
 
     // 기본 생성자
     public SupportDTO() {
     }
 
     // 모든 필드를 초기화하는 생성자
-    public SupportDTO(int supportNum, int num, String title, String detail, String author, String createdDate, String answer, boolean isPublic) {
+    public SupportDTO(int supportNum, int authorNum, int num, String title, String detail, String author, String createdDate, String answer, boolean isPublic, String category) {
         this.supportNum = supportNum;
+        this.authorNum = authorNum;
         this.num = num;
         this.title = title;
         this.detail = detail;
@@ -25,6 +28,7 @@ public class SupportDTO {
         this.createdDate = createdDate;
         this.answer = answer;
         this.isPublic = isPublic;
+        this.category = category;
     }
 
     // Getter와 Setter 메서드
@@ -44,6 +48,14 @@ public class SupportDTO {
         this.num = num;
     }
 
+    public int getAuthorNum() {
+        return authorNum;
+    }
+
+    public void setAuthorNum(int authorNum) {
+        this.authorNum = authorNum;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -51,7 +63,8 @@ public class SupportDTO {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getdDetail() {
+
+    public String getDetail() {
         return detail;
     }
 
@@ -83,27 +96,18 @@ public class SupportDTO {
         this.answer = answer;
     }
 
-    public boolean isPublic() {
+    public boolean getIsPublic() {
         return isPublic;
     }
 
-    public void setPublic(boolean isPublic) {
+    public void setISPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
 
-    // toString 메서드
-    @Override
-    public String toString() {
-        return "SupportDTO{" +
-                "supportNum=" + supportNum +
-                ", num=" + num +
-                ", title='" + title + '\'' +
-                ", detail='" + detail + '\'' +
-                ", author='" + author + '\'' +
-                ", createdDate=" + createdDate +
-                ", answer='" + answer + '\'' +
-                ", isPublic=" + isPublic +
-                '}';
+
+    public String getCategory() {
+        return category;
     }
 
+    public void setCategory(String category) {this.category = category; }
 }
