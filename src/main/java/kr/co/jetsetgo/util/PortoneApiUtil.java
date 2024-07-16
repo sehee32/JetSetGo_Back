@@ -85,10 +85,11 @@ public class PortoneApiUtil {
 
         HttpsURLConnection conn = null;
 
-        URL url1 = new URL("https://api.iamport.kr"+url);
+        URL url1 = new URL("https://api.portone.io"+url);
 
         conn = (HttpsURLConnection) url1.openConnection();
 
+        // header (PATH) 영역
         conn.setRequestMethod(type);
         conn.setRequestProperty("Content-type", "application/json");
         conn.setRequestProperty("Accept", "application/json");
