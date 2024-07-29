@@ -85,7 +85,8 @@ public class PortoneApiUtil {
 
         HttpsURLConnection conn = null;
 
-        URL url1 = new URL("https://api.portone.io"+url);
+//        URL url1 = new URL("https://api.portone.io"+url);
+        URL url1 = new URL("https://api.iamport.kr"+url);
 
         conn = (HttpsURLConnection) url1.openConnection();
 
@@ -141,4 +142,32 @@ public class PortoneApiUtil {
 
         return new ObjectMapper().readValue(jsonObject.toString(), t);
     }
+
+    /**
+     * 본인인증 결과 조회 portone API
+     *
+     *  @param imp_uid : 본인인증 결과로 리턴 받은 포트원 인증 고유번호
+     *  @param t : 반환할 클래스 타입
+     */
+    public static <T> T getCertificationResult(String imp_uid, Class<T> t) throws Exception {
+
+        String url = "/certifications/" + imp_uid;
+        String res = getPortOneApi(url, "GET", null);
+        JSONObject jsonObject = new JSONObject(res);
+
+        return new ObjectMapper().readValue(jsonObject.toString(), t);
+    }
+
+    /**
+     * 본인인증 정보 삭제 portone API
+     */
+    public static String deleteCertificationInfo(String imp_uid) throws IOException {
+
+        String url = "/certifications/" + imp_uid;
+        return getPortOneApi(url, "DELETE", null);
+    }
+
+
+
+
 }
