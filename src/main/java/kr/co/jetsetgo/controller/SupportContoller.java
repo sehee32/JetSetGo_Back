@@ -1,6 +1,6 @@
 package kr.co.jetsetgo.controller;
 
-import kr.co.jetsetgo.model.SupportDTO;
+import kr.co.jetsetgo.model.SupportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.jetsetgo.service.SupportService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +29,7 @@ public class SupportContoller {
 
     //1:1문의 검색
     @PostMapping(value = "/supportSearch", produces = "application/json; charset=utf-8")
-    public List<SupportDTO> supportSearch(@RequestBody(required = false) String data) {
+    public List<SupportDto> supportSearch(@RequestBody(required = false) String data) {
         System.out.println("1:1문의 검색: " + data);
         // data에 해당하는 값 받아옴
 //        List<SupportDTO> result = SupportService.selectSupports(data);
