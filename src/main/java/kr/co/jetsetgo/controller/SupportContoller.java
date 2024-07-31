@@ -45,4 +45,12 @@ public class SupportContoller {
         return true;
     }
 
+//    //문의하기 상세 진입
+//    @PostMapping(value = "/enterSupport", produces = "application/json; charset=utf-8")
+//    public SupportDto enterSupport(@RequestBody(required = false) String data) {
+//        SupportDto result = SupportService.selectSupport(data);
+////        System.out.println(result.getSupportNum());
+//        return result;
+//    }
+
 }

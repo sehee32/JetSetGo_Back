@@ -1,6 +1,7 @@
 package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.service.HelloWordService;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

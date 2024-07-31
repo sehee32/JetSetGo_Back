@@ -1,6 +1,7 @@
 package kr.co.jetsetgo.service;
 
 import kr.co.jetsetgo.model.SupportDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,65 +12,11 @@ import java.util.List;
 
 @Service
 public class SupportServicelmpl implements SupportService{
+
+    @Autowired
+    private SupportMapper supportMapper;
+
     public List<SupportDto> selectSupports(String data) {
-//        // JDBC 연결 변수
-//        private static Connection connection = null;
-//        private static Statement statement = null;
-//        private static ResultSet resultSet = null;
-//
-//        // JDBC 연결 정보
-//        private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
-//        private static final String DB_USER = "your_username";
-//        private static final String DB_PASSWORD = "your_password";
-//
-//        public static void main(String[] args) {
-//            // JSON 문자열
-//            String jsonString = "{\"search\":\"value_to_search\", \"category\":\"baggage\"}";
-//
-//            try {
-//                // JSON 파싱
-//                JSONObject json = new JSONObject(jsonString);
-//                String searchValue = json.getString("search");
-//                String categoryValue = json.getString("category");
-//
-//                // JDBC 드라이버 로드
-//                Class.forName("com.mysql.cj.jdbc.Driver");
-//
-//                // 데이터베이스 연결
-//                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-//
-//                // SQL 쿼리 준비
-//                String query = "SELECT * FROM your_table_name WHERE search_column = ? AND category_column = ?";
-//
-//                // PreparedStatement를 사용하여 SQL 인젝션을 방지
-//                PreparedStatement preparedStatement = connection.prepareStatement(query);
-//                preparedStatement.setString(1, searchValue);
-//                preparedStatement.setString(2, categoryValue);
-//
-//                // 쿼리 실행 및 결과 가져오기
-//                resultSet = preparedStatement.executeQuery();
-//
-//                // 결과 처리
-//                while (resultSet.next()) {
-//                    // 결과에서 필요한 작업 수행
-//                    int id = resultSet.getInt("id");  // 예시: id 칼럼
-//                    String name = resultSet.getString("name");  // 예시: name 칼럼
-//                    // 원하는 데이터를 가져와서 처리
-//                    System.out.println("ID: " + id + ", Name: " + name);
-//                }
-//            } catch (ClassNotFoundException | SQLException e) {
-//                e.printStackTrace();
-//            } finally {
-//                // 자원 해제
-//                try {
-//                    if (resultSet != null) resultSet.close();
-//                    if (statement != null) statement.close();
-//                    if (connection != null) connection.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
 
         List<SupportDto> searchResults = new ArrayList<>();
         searchResults.add(new SupportDto(1, 1,101, "확인용:"+data, "내용", "작성자1", "2024-05-21", "테스트용 답변입니다.", true,"etc"));
@@ -89,4 +36,11 @@ public class SupportServicelmpl implements SupportService{
 
 
     }
+
+    public SupportDto selectSupport(String id){
+        SupportDto result = supportMapper.findById(id);
+
+        return result;
+    }
+
 }

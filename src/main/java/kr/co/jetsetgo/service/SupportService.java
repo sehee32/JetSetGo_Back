@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SupportService {
     public List<SupportDto> selectSupports(String data);
+    public SupportDto selectSupport(String id);
 }
