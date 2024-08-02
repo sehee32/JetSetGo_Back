@@ -1,4 +1,4 @@
-package kr.co.jetsetgo.service;
+package kr.co.jetsetgo.dbio;
 
 import kr.co.jetsetgo.model.SupportDto;
 import org.apache.ibatis.annotations.Mapper;

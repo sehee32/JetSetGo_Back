@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.service;
 
+import kr.co.jetsetgo.dbio.SupportMapper;
 import kr.co.jetsetgo.model.SupportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
