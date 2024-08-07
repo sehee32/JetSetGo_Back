@@ -1,7 +1,7 @@
 package kr.co.jetsetgo.model;
 
 // 회원가입 요청 데이터 담는 DTO
-public class SignUpRequest {
+public class SignUpDto {
     private String name;
     private String username;
     private String password;
@@ -59,17 +59,17 @@ public class SignUpRequest {
         this.agreeTerms = agreeTerms;
     }
 
-    @Override
-    public String toString() {
-        return "SignUpRequest{" +
-                "name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", birthdate='" + birthdate + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", agreeTerms=" + agreeTerms +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "SignUpRequest{" +
+//                "name='" + name + '\'' +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", birthdate='" + birthdate + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", agreeTerms=" + agreeTerms +
+//                '}';
+//    }
 }
 
 

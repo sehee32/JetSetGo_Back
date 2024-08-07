@@ -6,24 +6,12 @@ const bodyParser = require('body-parser');
 const mariadb = require('mariadb');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-// const fetch = require('node-fetch');
 const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const imp_key = process.env.imp_key;
 const imp_secret = process.env.imp_secret;
-
-app.use(bodyParser.json());
-app.use(cors());
-
-console.log('PORT:', process.env.PORT);
-console.log('imp_key:', process.env.imp_key);
-console.log('imp_secret:', process.env.imp_secret);
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_NAME:', process.env.DB_NAME);
 
 // MariaDB 연결 설정
 const pool = mariadb.createPool({
@@ -35,6 +23,9 @@ const pool = mariadb.createPool({
     connectionLimit: 10
 });
 
+app.use(bodyParser.json());
+app.use(cors());
+
 // 회원가입 API
 app.post('/api/signup', async (req, res) => {
     const { name, username, password, birthdate, phoneNumber, agreeTerms } = req.body;
@@ -44,13 +35,13 @@ app.post('/api/signup', async (req, res) => {
         const conn = await pool.getConnection();
         console.log('데이터베이스 연결 성공');
 
-        const sql = 'INSERT INTO MEMBERS (NAME, USERNAME, PASSWORD, BIRTHDATE, PHONENUMBER, AGREETERMS) VALUES (?, ?, ?, ?, ?, ?)';
-        const result = await conn.query(sql, [name, username, hashedPassword, birthdate, phoneNumber, agreeTerms ? 1 : 0]);
+        const query = `INSERT INTO MEMBERS (NAME, USERNAME, PASSWORD, BIRTHDATE, PHONENUMBER, AGREETERMS) VALUES (?, ?, ?, ?, ?, ?)`;
+        const values = [name, username, password, birthdate, phoneNumber, agreeTerms ? 1 : 0];
 
-        console.log('쿼리 실행 결과:', result);
+        await conn.query(query, values);
         conn.release();
 
-        res.status(201).send('회원가입 성공');
+        res.status(200).send('회원가입 성공');
     } catch (err) {
         console.error('회원가입 오류:', err);
         res.status(500).send('회원가입 실패');
