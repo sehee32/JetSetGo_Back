@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jetsetgo.dbio.SignUpMapper">
+
+    <resultMap type="kr.co.jetsetgo.model.SignUpDto"
+               id="signUpDto">
+        <id column="MEMBERNUM" property="memberNum" />
+        <result column="NAME" property="name" />
+        <result column="USERNAME" property="username" />
+        <result column="PASSWORD" property="password" />
+        <result column="BIRTHDATE" property="birthdate" />
+        <result column="PHONENUMBER" property="phoneNumber" />
+        <result column="AGREETERMS" property="agreeTerms" />
+
+    </resultMap>
+
+    <insert id="insertMember" parameterType="kr.co.jetsetgo.model.MemberDto">
+        <!-- 새로운 회원을 삽입 -->
+        INSERT INTO MEMBERS (NAME, USERNAME, PASSWORD, BIRTHDATE, PHONENUMBER, AGREETERMS)
+        VALUES (#{name}, #{username}, #{password}, #{birthdate}, #{phoneNumber}, #{agreeTerms})
+    </insert>
+
+    <select id="findByUsername" resultMap="SignUpDto">
+        <!-- USERNAME 찾는 쿼리. 결과는 memberDto resultMap에 매핑 -->
+        SELECT * FROM MEMBERS WHERE USERNAME = #{username}
+    </select>
+
+
+</mapper>
