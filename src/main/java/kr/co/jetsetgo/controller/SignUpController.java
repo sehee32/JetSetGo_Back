@@ -26,10 +26,12 @@ public class SignUpController {
 
 
     @PostMapping("/checkUsername")
-    public boolean checkUsername(@RequestBody Map<String, String> usernameMap) {
+    public Map<String, Boolean> checkUsername(@RequestBody Map<String, String> usernameMap) {
         String username = usernameMap.get("username");
         SignUpDto existingMember = signUpMapper.findByUsername(username);
-        return existingMember != null;
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", existingMember != null);
+        return response;
     }
 
 //    @PostMapping("/identity-verifications")
