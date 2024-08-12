@@ -5,21 +5,8 @@
 
 <mapper namespace="kr.co.jetsetgo.dbio.SupportMapper">
 
-    <resultMap type="kr.co.jetsetgo.model.SupportDto"
-               id="supportDto">
-        <id column="SUPPORT_ID" property="supportNum" />
-        <result column="WRITER_ID" property="authorNum" />
-        <result column="NUM" property="num" />
-        <result column="TITLE" property="title" />
-        <result column="DETAIL" property="detail" />
-        <result column="WRITER_NAME" property="author" />
-        <result column="CREATED_DATE" property="createdDate" />
-        <result column="ANSWER" property="answer" />
-        <result column="PUBLIC" property="isPublic" />
-        <result column="CATEGORY" property="category" />
-    </resultMap>
-
-    <select id="findById" resultMap="supportDto">
+    <select id="findById" resultType="kr.co.jetsetgo.model.TbSupport">
+        <!-- SUPPORT_ID로 문의 검색 -->
         SELECT * FROM support WHERE SUPPORT_ID = #{id}
     </select>
 
