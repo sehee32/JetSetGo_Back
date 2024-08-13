@@ -1,6 +1,7 @@
 package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.model.SupportDto;
+import kr.co.jetsetgo.model.TbSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.jetsetgo.service.SupportService;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -47,9 +49,15 @@ public class SupportContoller {
 
     //문의하기 상세 진입
     @PostMapping(value = "/enterSupport", produces = "application/json; charset=utf-8")
-    public SupportDto enterSupport(@RequestBody(required = false) String data) {
-        SupportDto result = SupportService.selectSupport(data);
-//        System.out.println(result.getSupportNum());
+    public TbSupport enterSupport(@RequestBody(required = false) Map<String, String> supportIdMap) {
+        String supportId = supportIdMap.get("supportId");
+        TbSupport result = SupportService.selectSupport(supportId);
+//        if (result != null) {
+//            System.out.println(result.getSupportId());
+//        } else {
+//            System.out.println("컨트롤러 null인디");
+//        }
+
         return result;
     }
 

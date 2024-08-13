@@ -7,7 +7,7 @@
 
     <select id="findById" resultType="kr.co.jetsetgo.model.TbSupport">
         <!-- SUPPORT_ID로 문의 검색 -->
-        SELECT * FROM support WHERE SUPPORT_ID = #{id}
+        SELECT * FROM SUPPORT WHERE SUPPORT_ID = #{id}
     </select>
 
     <!-- 추가적인 SQL 매핑 정의 -->

@@ -3,42 +3,42 @@ package kr.co.jetsetgo.model;
 
 public class TbSupport {
 
-  private long supportId;
-  private long writerId;
-  private String writerName;
+  private long support_Id;
+  private long writer_Id;
+  private String writer_Name;
   private long num;
   private String title;
   private String detail;
-  private java.sql.Timestamp createdDate;
+  private java.sql.Timestamp created_Date;
   private String answer;
   private long publicStatus;
   private String category;
 
 
-  public long getSupportId() {
-    return supportId;
+  public long getSupport_Id() {
+    return support_Id;
   }
 
-  public void setSupportId(long supportId) {
-    this.supportId = supportId;
-  }
-
-
-  public long getWriterId() {
-    return writerId;
-  }
-
-  public void setWriterId(long writerId) {
-    this.writerId = writerId;
+  public void setSupport_Id(long support_Id) {
+    this.support_Id = support_Id;
   }
 
 
-  public String getWriterName() {
-    return writerName;
+  public long getWriter_Id() {
+    return writer_Id;
   }
 
-  public void setWriterName(String writerName) {
-    this.writerName = writerName;
+  public void setWriter_Id(long writer_Id) {
+    this.writer_Id = writer_Id;
+  }
+
+
+  public String getWriter_Name() {
+    return writer_Name;
+  }
+
+  public void setWriter_Name(String writer_Name) {
+    this.writer_Name = writer_Name;
   }
 
 
@@ -69,12 +69,12 @@ public class TbSupport {
   }
 
 
-  public java.sql.Timestamp getCreatedDate() {
-    return createdDate;
+  public java.sql.Timestamp getCreated_Date() {
+    return created_Date;
   }
 
-  public void setCreatedDate(java.sql.Timestamp createdDate) {
-    this.createdDate = createdDate;
+  public void setCreated_Date(java.sql.Timestamp created_Date) {
+    this.created_Date = created_Date;
   }
 
 

@@ -2,6 +2,7 @@ package kr.co.jetsetgo.service;
 
 import kr.co.jetsetgo.dbio.SupportMapper;
 import kr.co.jetsetgo.model.SupportDto;
+import kr.co.jetsetgo.model.TbSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +39,23 @@ public class SupportServicelmpl implements SupportService{
 
     }
 
-    public SupportDto selectSupport(String id){
-        SupportDto result = supportMapper.findById(id);
-
+    public TbSupport selectSupport(String supportId){
+        TbSupport result = supportMapper.findById(supportId);
+//        System.out.println(supportId);
+        if (result != null) {
+            System.out.println("결과" + result.getSupport_Id()); //0 오류   1
+            System.out.println(result.getWriter_Id()); //0 오류   1
+            System.out.println(result.getWriter_Name()); //null 오류  user001
+            System.out.println(result.getNum()); //1
+            System.out.println(result.getTitle()); //궁굼..
+            System.out.println(result.getDetail()); // 물어..
+            System.out.println(result.getCreated_Date()); //null 오류  2024-07-06 00:00:00.0
+            System.out.println(result.getAnswer()); //null
+            System.out.println(result.getPublicStatus()); //0
+            System.out.println(result.getCategory()); //etc
+        } else {
+            System.out.println("서비스 null인디");
+        }
         return result;
     }
 

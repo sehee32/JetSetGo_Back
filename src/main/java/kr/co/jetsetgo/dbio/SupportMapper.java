@@ -1,13 +1,13 @@
 package kr.co.jetsetgo.dbio;
 
-import kr.co.jetsetgo.model.SupportDto;
+import kr.co.jetsetgo.model.TbSupport;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SupportMapper {
 
-    SupportDto findById(String id);
+    TbSupport findById(String id);
 
 //        SupportDto loginProc(String id);
 //
