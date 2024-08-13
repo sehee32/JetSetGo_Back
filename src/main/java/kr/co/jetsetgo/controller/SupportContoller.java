@@ -31,12 +31,11 @@ public class SupportContoller {
 
     //1:1문의 검색
     @PostMapping(value = "/supportSearch", produces = "application/json; charset=utf-8")
-    public List<SupportDto> supportSearch(@RequestBody(required = false) String data) {
-        System.out.println("1:1문의 검색: " + data);
-        // data에 해당하는 값 받아옴
-//        List<SupportDTO> result = SupportService.selectSupports(data);
-        System.out.println(SupportService.selectSupports(data));
-        return SupportService.selectSupports(data);
+    public List<TbSupport> supportSearch(@RequestBody(required = false) Map<String, String> SearchMap) {
+        System.out.println("1:1문의 검색: " + SearchMap);
+        List<TbSupport> result = SupportService.selectSupports(SearchMap);
+        System.out.println(result);
+        return result;
     }
 
     //문의하기 추가
@@ -50,14 +49,7 @@ public class SupportContoller {
     //문의하기 상세 진입
     @PostMapping(value = "/enterSupport", produces = "application/json; charset=utf-8")
     public TbSupport enterSupport(@RequestBody(required = false) Map<String, String> supportIdMap) {
-        String supportId = supportIdMap.get("supportId");
-        TbSupport result = SupportService.selectSupport(supportId);
-//        if (result != null) {
-//            System.out.println(result.getSupportId());
-//        } else {
-//            System.out.println("컨트롤러 null인디");
-//        }
-
+        TbSupport result = SupportService.selectSupport(supportIdMap);
         return result;
     }
 

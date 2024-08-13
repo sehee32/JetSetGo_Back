@@ -5,10 +5,67 @@
 
 <mapper namespace="kr.co.jetsetgo.dbio.SupportMapper">
 
+    <!-- 검색어와 category로 문의 검색 -->
+    <select id="findBySearchQuery" resultType="kr.co.jetsetgo.model.TbSupport">
+        SELECT * FROM SUPPORT WHERE TITLE = LIKE CONCAT('%', #{search}, '%') AND CATEGORY = #{category} ORDER BY SUPPORT_ID DESC
+    </select>
+
+    <!-- SUPPORT_ID로 문의 검색 -->
     <select id="findById" resultType="kr.co.jetsetgo.model.TbSupport">
-        <!-- SUPPORT_ID로 문의 검색 -->
         SELECT * FROM SUPPORT WHERE SUPPORT_ID = #{id}
     </select>
 
-    <!-- 추가적인 SQL 매핑 정의 -->
+    <!-- 예시 -->
+<!--    <select id="reservationcount">-->
+<!--        SELECT COALESCE(nvl(max(no),0) + 1, 0) FROM reservation-->
+<!--    </select>-->
+
+<!--    <insert id="reservationProc" parameterType="com.care.stay.reservation.ReservationDTO">-->
+<!--        <selectKey order="BEFORE" keyProperty="no" resultType="int">-->
+<!--            SELECT nvl(max(no),0) + 1 FROM reservation-->
+<!--        </selectKey>-->
+
+<!--        INSERT INTO reservation (no, stayno, stayname, roomname, code, roomcode, roomimage, checkindate, checkoutdate, checkintime, checkouttime, id, name, mobile, price, paymethod, status)-->
+<!--        VALUES(#{no}, #{stayno}, #{stayname}, #{roomname}, #{code}, #{roomcode}, #{roomimage}, #{checkindate}, #{checkoutdate}, #{checkintime}, #{checkouttime}, #{id}, #{name}, #{mobile}, #{price}, #{paymethod}, '예약확정')-->
+<!--    </insert>-->
+
+<!--    <update id="listUp">-->
+<!--        UPDATE reservation SET status='이용완료' WHERE (DATE_FORMAT(now(), '%Y-%m-%d') > checkindate OR (DATE_FORMAT(SYSDATE(), '%Y-%m-%d') = checkindate AND DATE_FORMAT(CURRENT_TIMESTAMP, '%H:%i') >= checkintime)) AND status='예약확정'-->
+<!--    </update>-->
+
+<!--    <select id="resConfirmed" resultMap="ReservationDto">-->
+<!--        SELECT * FROM reservation-->
+<!--        WHERE-->
+<!--            id=#{id} AND status='예약확정' ORDER BY checkindate ASC-->
+<!--    </select>-->
+
+<!--    <select id="resCompleted" resultMap="ReservationDto">-->
+<!--        SELECT * FROM reservation-->
+<!--        WHERE-->
+<!--            id=#{id} AND status='이용완료' ORDER BY checkindate DESC-->
+<!--    </select>-->
+
+<!--    <select id="resCancellation" resultMap="ReservationDto">-->
+<!--        SELECT * FROM reservation-->
+<!--        WHERE-->
+<!--            id=#{id} AND status='예약취소' ORDER BY checkindate DESC-->
+<!--    </select>-->
+
+<!--    <delete id="delete">-->
+<!--        DELETE FROM reservation WHERE no=#{no}-->
+<!--    </delete>-->
+
+<!--    <select id="resDetail" resultMap="ReservationDto">-->
+<!--        SELECT * FROM reservation-->
+<!--        WHERE-->
+<!--            no=#{no}-->
+<!--    </select>-->
+
+<!--    <update id="resUpdate">-->
+<!--        UPDATE reservation-->
+<!--        SET status='예약취소'-->
+<!--        WHERE no=#{no}-->
+<!--    </update>-->
+
+
 </mapper>
