@@ -25,7 +25,7 @@ public class SupportServicelmpl implements SupportService{
         searchResults.add(new SupportDto(3, 1, 103, "제목3", "내용", "작성자3","2024-05-24", "", true,"etc"));
         searchResults.add(new SupportDto(2, 1, 102, "제목2", "내용", "작성자2","2024-05-23", "", false,"etc"));
         searchResults.add(new SupportDto(4, 1, 104, "제목4", "내용", "작성자4","2024-05-25", "", true,"etc"));
-        searchResults.add(new SupportDto(5, 1, 105, "제목5", "내용", "작성자5","2024-05-26", "테스트용 답변입니다.", false,"etc"));
+        searchResults.add(new SupportDto(5, 1, 105, "제목5", "내용", "작성자5","2024-05-26", "테스트용 답변입니다.", true,"etc"));
         searchResults.add(new SupportDto(6, 1, 106, "제목6", "내용", "작성자6","2024-05-27", "테스트용 답변입니다.", true,"etc"));
         searchResults.add(new SupportDto(7, 1, 107, "제목7", "내용", "작성자7","2024-05-28", "", false,"etc"));
         searchResults.add(new SupportDto(8, 1, 108, "제목8", "내용", "작성자8","2024-05-29", "", true,"etc"));
@@ -42,20 +42,7 @@ public class SupportServicelmpl implements SupportService{
     public TbSupport selectSupport(String supportId){
         TbSupport result = supportMapper.findById(supportId);
 //        System.out.println(supportId);
-        if (result != null) {
-            System.out.println("결과" + result.getSupport_Id()); //0 오류   1
-            System.out.println(result.getWriter_Id()); //0 오류   1
-            System.out.println(result.getWriter_Name()); //null 오류  user001
-            System.out.println(result.getNum()); //1
-            System.out.println(result.getTitle()); //궁굼..
-            System.out.println(result.getDetail()); // 물어..
-            System.out.println(result.getCreated_Date()); //null 오류  2024-07-06 00:00:00.0
-            System.out.println(result.getAnswer()); //null
-            System.out.println(result.getPublicStatus()); //0
-            System.out.println(result.getCategory()); //etc
-        } else {
-            System.out.println("서비스 null인디");
-        }
+        System.out.println(result.getPublic_Status());
         return result;
     }
 
