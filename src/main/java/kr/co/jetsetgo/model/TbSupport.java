@@ -11,7 +11,7 @@ public class TbSupport {
   private String detail;
   private java.sql.Timestamp created_Date;
   private String answer;
-  private long public_Status;
+  private boolean public_Status;
   private String category;
 
 
@@ -87,11 +87,11 @@ public class TbSupport {
   }
 
 
-  public long getPublic_Status() {
+  public boolean getPublic_Status() {
     return public_Status;
   }
 
-  public void setPublic_Status(long public_Status) {
+  public void setPublic_Status(boolean public_Status) {
     this.public_Status = public_Status;
   }
 
