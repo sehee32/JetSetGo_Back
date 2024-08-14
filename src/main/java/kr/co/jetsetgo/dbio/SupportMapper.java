@@ -15,6 +15,15 @@ public interface SupportMapper {
 
     TbSupport findById(String id); //문의하기 상세 진입
 
+    void addSupport(TbSupport member); // 문의하기 추가
+
+    // 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정
+//    String writerName findByWriterId(String writerId); // id로 사용자 아이디 검색
+
+
+
+
+
 //        SupportDto loginProc(String id);
 //
 //    SupportDto serchNickname(String nickname);

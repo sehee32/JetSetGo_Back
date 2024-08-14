@@ -38,18 +38,19 @@ public class SupportContoller {
         return result;
     }
 
-    //문의하기 추가
-    @PostMapping(value = "/supportAdd", produces = "application/json; charset=utf-8")
-    public boolean supportAdd(@RequestBody(required = false) String data) {
-        System.out.println("문의하기: " + data);
-        // data에 해당하는 값 받아옴
-        return true;
-    }
-
     //문의하기 상세 진입
     @PostMapping(value = "/enterSupport", produces = "application/json; charset=utf-8")
     public TbSupport enterSupport(@RequestBody(required = false) Map<String, String> supportIdMap) {
         TbSupport result = SupportService.selectSupport(supportIdMap);
+        return result;
+    }
+
+    //문의하기 추가
+    @PostMapping(value = "/supportAdd", produces = "application/json; charset=utf-8")
+    public boolean supportAdd(@RequestBody(required = false) TbSupport support) {
+        System.out.println("문의하기: " + support);
+        boolean result = SupportService.insertSupport(support);
+        // data에 해당하는 값 받아옴
         return result;
     }
 

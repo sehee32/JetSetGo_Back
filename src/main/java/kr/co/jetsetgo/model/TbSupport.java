@@ -6,7 +6,6 @@ public class TbSupport {
   private long support_Id;
   private long writer_Id;
   private String writer_Name;
-  private long num;
   private String title;
   private String detail;
   private java.sql.Date created_Date;
@@ -39,15 +38,6 @@ public class TbSupport {
 
   public void setWriter_Name(String writer_Name) {
     this.writer_Name = writer_Name;
-  }
-
-
-  public long getNum() {
-    return num;
-  }
-
-  public void setNum(long num) {
-    this.num = num;
   }
 
 

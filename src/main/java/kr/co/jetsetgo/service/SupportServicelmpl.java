@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.service;
 
+import kr.co.jetsetgo.dbio.SignUpMapper;
 import kr.co.jetsetgo.dbio.SupportMapper;
 import kr.co.jetsetgo.model.SupportDto;
 import kr.co.jetsetgo.model.TbSupport;
@@ -18,6 +19,8 @@ public class SupportServicelmpl implements SupportService{
 
     @Autowired
     private SupportMapper supportMapper;
+    @Autowired
+    private SignUpMapper signUpMapper;
 
     //1:1문의 검색
     public List<TbSupport> selectSupports(Map<String, String> SearchMap) {
@@ -59,6 +62,25 @@ public class SupportServicelmpl implements SupportService{
 //        System.out.println(supportId);
         System.out.println(result.getPublic_Status());
         return result;
+    }
+
+    //문의하기 추가
+    public boolean insertSupport(TbSupport support){
+        // 아이디 변경 가능한지 문의 필요
+//        String writerName = signUpMapper.findByWriterId(support.getWriter_Id()); //id로 사용자 아이디 검색
+//        support.setWriter_Name(writerName);
+
+        support.setWriter_Name("user001"); //임시 아이디 입력
+
+        System.out.println(support.getWriter_Id());
+        System.out.println(support.getTitle());
+        System.out.println(support.getDetail());
+        System.out.println(support.getPublic_Status());
+        System.out.println(support.getCategory());
+
+        supportMapper.addSupport(support);
+
+        return true;
     }
 
 }

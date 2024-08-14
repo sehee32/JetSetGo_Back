@@ -25,6 +25,20 @@
         SELECT * FROM SUPPORT WHERE SUPPORT_ID = #{id}
     </select>
 
+    <!-- 문의하기  추가 -->
+    <insert id="addSupport">
+        INSERT INTO SUPPORT (WRITER_ID, WRITER_NAME, TITLE, DETAIL, CREATED_DATE, PUBLIC_STATUS, CATEGORY)
+        VALUES (#{writer_Id}, #{writer_Name}, #{title}, #{detail}, NOW(), #{public_Status}, #{category});
+    </insert>
+
+    <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
+    <!-- id로 사용자 아이디 검색 -->
+<!--    <select id="findByWriterId">-->
+<!--        SELECT USERNAME FROM MEMBERS WHERE MEMBERNUM = #{writerId}-->
+<!--    </select>-->
+
+
+
     <!-- 예시 -->
 <!--    <select id="reservationcount">-->
 <!--        SELECT COALESCE(nvl(max(no),0) + 1, 0) FROM reservation-->
