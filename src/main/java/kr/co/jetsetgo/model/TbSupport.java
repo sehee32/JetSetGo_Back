@@ -9,7 +9,7 @@ public class TbSupport {
   private long num;
   private String title;
   private String detail;
-  private java.sql.Timestamp created_Date;
+  private java.sql.Date created_Date;
   private String answer;
   private boolean public_Status;
   private String category;
@@ -69,11 +69,11 @@ public class TbSupport {
   }
 
 
-  public java.sql.Timestamp getCreated_Date() {
+  public java.sql.Date getCreated_Date() {
     return created_Date;
   }
 
-  public void setCreated_Date(java.sql.Timestamp created_Date) {
+  public void setCreated_Date(java.sql.Date created_Date) {
     this.created_Date = created_Date;
   }
 

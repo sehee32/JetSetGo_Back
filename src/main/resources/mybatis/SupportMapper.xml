@@ -5,9 +5,19 @@
 
 <mapper namespace="kr.co.jetsetgo.dbio.SupportMapper">
 
-    <!-- 검색어와 category로 문의 검색 -->
+    <!-- 전체 문의 검색 -->
+    <select id="findAll" resultType="kr.co.jetsetgo.model.TbSupport">
+        SELECT * FROM SUPPORT ORDER BY SUPPORT_ID DESC
+    </select>
+
+    <!-- category로 문의 검색 -->
+    <select id="findBycategory" resultType="kr.co.jetsetgo.model.TbSupport">
+        SELECT * FROM SUPPORT WHERE CATEGORY = #{category} ORDER BY SUPPORT_ID DESC
+    </select>
+
+    <!-- 검색어로 문의 검색 -->
     <select id="findBySearchQuery" resultType="kr.co.jetsetgo.model.TbSupport">
-        SELECT * FROM SUPPORT WHERE TITLE = LIKE CONCAT('%', #{search}, '%') AND CATEGORY = #{category} ORDER BY SUPPORT_ID DESC
+        SELECT * FROM SUPPORT WHERE TITLE LIKE CONCAT('%', #{search}, '%') ORDER BY SUPPORT_ID DESC
     </select>
 
     <!-- SUPPORT_ID로 문의 검색 -->

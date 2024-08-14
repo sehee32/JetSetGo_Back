@@ -9,7 +9,9 @@ import java.util.List;
 @Mapper
 public interface SupportMapper {
 
-    List<TbSupport> findBySearchQuery(String search, String category); //1:1문의 검색
+    List<TbSupport> findAll(); //1:1문의 전체 검색)
+    List<TbSupport> findBycategory(String category); //1:1문의 검색(카테고리)
+    List<TbSupport> findBySearchQuery(String search); //1:1문의 검색(검색어)
 
     TbSupport findById(String id); //문의하기 상세 진입
 

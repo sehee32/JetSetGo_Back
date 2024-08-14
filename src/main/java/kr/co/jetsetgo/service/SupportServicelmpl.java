@@ -23,8 +23,20 @@ public class SupportServicelmpl implements SupportService{
     public List<TbSupport> selectSupports(Map<String, String> SearchMap) {
         String search = SearchMap.get("search");
         String category = SearchMap.get("category");
+        System.out.println("카테고리 : " + category);
+        System.out.println("검색어 : " + search);
 
-        List<TbSupport> results = supportMapper.findBySearchQuery(search, category);
+        List<TbSupport> results = null;
+
+        if (search == ""){
+            if(category.equals("total")){
+                results = supportMapper.findAll();
+            }else{
+                results = supportMapper.findBycategory(category);
+            }
+        } else {
+                results = supportMapper.findBySearchQuery(search);
+        }
 //        results.add(new SupportDto(1, 1,101, "확인용:"+data, "내용", "작성자1", "2024-05-21", "테스트용 답변입니다.", true,"etc"));
 //        results.add(new SupportDto(3, 1, 103, "제목3", "내용", "작성자3","2024-05-24", "", true,"etc"));
 //        results.add(new SupportDto(2, 1, 102, "제목2", "내용", "작성자2","2024-05-23", "", false,"etc"));
