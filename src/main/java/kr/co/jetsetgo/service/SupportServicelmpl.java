@@ -64,10 +64,30 @@ public class SupportServicelmpl implements SupportService{
         return result;
     }
 
+    //문의하기 상세 진입시 비밀번호 확인
+    public boolean selectSupportPassword(Map<String, String> supportIdMap){
+        String supportId = supportIdMap.get("supportId");
+        String password = supportIdMap.get("password");
+
+        System.out.println(supportId);
+        System.out.println(password);
+
+        // 비밀번호 암호화 할 것인지 문의 필요, 로그인한 사용자만 확인 가능으로 할 것인지도 문의 필요(우선 비번만 맞으면 진입 가능으로 구현)
+//        TbSupport support = supportMapper.findById(supportId);
+//        String writerPassword = signUpMapper.findPasswordByWriterId(support.getWriter_Id()); //id로 작성자 비밀번호 검색
+        String writerPassword ="test"; //임시 비밀번호 입력
+
+        if (writerPassword.equals(password)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     //문의하기 추가
     public boolean insertSupport(TbSupport support){
         // 아이디 변경 가능한지 문의 필요
-//        String writerName = signUpMapper.findByWriterId(support.getWriter_Id()); //id로 사용자 아이디 검색
+//        String writerName = signUpMapper.findNameByWriterId(support.getWriter_Id()); //id로 사용자 아이디 검색
 //        support.setWriter_Name(writerName);
 
         support.setWriter_Name("user001"); //임시 아이디 입력

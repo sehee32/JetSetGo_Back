@@ -45,6 +45,13 @@ public class SupportContoller {
         return result;
     }
 
+    //문의하기 상세 진입시 비밀번호 확인
+    @PostMapping(value = "/supportCheckPassword", produces = "application/json; charset=utf-8")
+    public boolean supportCheckPassword(@RequestBody(required = false) Map<String, String> supportIdMap) {
+        boolean result = SupportService.selectSupportPassword(supportIdMap);
+        return result;
+    }
+
     //문의하기 추가
     @PostMapping(value = "/supportAdd", produces = "application/json; charset=utf-8")
     public boolean supportAdd(@RequestBody(required = false) TbSupport support) {

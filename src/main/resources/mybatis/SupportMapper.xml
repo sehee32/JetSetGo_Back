@@ -33,9 +33,16 @@
 
     <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
     <!-- id로 사용자 아이디 검색 -->
-<!--    <select id="findByWriterId">-->
+<!--    <select id="findNameByWriterId">-->
 <!--        SELECT USERNAME FROM MEMBERS WHERE MEMBERNUM = #{writerId}-->
 <!--    </select>-->
+
+    <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
+    <!-- id로 작성자 비밀번호 검색 -->
+    <!--    <select id="findPasswordByWriterId">-->
+    <!--        SELECT PASSWORD FROM MEMBERS WHERE MEMBERNUM = #{writerId}-->
+    <!--    </select>-->
+
 
 
 
