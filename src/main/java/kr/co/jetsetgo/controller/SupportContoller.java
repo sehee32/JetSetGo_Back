@@ -61,4 +61,13 @@ public class SupportContoller {
         return result;
     }
 
+    //문의하기 수정(수정, 답변)
+    @PostMapping(value = "/supportEdit", produces = "application/json; charset=utf-8")
+    public boolean supportEdit(@RequestBody(required = false) TbSupport support) {
+        System.out.println("문의수정: " + support);
+        boolean result = SupportService.updateSupport(support);
+        // data에 해당하는 값 받아옴
+        return result;
+    }
+
 }

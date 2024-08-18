@@ -11,4 +11,5 @@ public interface SupportService {
     public TbSupport selectSupport(Map<String, String> supportIdMap); //문의하기 상세 진입
     public boolean selectSupportPassword(Map<String, String> supportIdMap); //문의하기 상세 진입시 비밀번호 확인
     public boolean insertSupport(TbSupport support); //문의하기 추가
+    public boolean updateSupport(TbSupport support); //문의하기 추가
 }

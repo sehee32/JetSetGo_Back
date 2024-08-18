@@ -31,6 +31,14 @@
         VALUES (#{writer_Id}, #{writer_Name}, #{title}, #{detail}, NOW(), #{public_Status}, #{category});
     </insert>
 
+    <!-- 문의하기  수정 -->
+    <update id="editSupport">
+        UPDATE SUPPORT
+        SET TITLE = #{title}, DETAIL = #{detail}, PUBLIC_STATUS = #{public_Status}, CATEGORY = #{category}, ANSWER = #{answer}
+        WHERE SUPPORT_ID = #{support_Id}
+    </update>
+
+
     <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
     <!-- id로 사용자 아이디 검색 -->
 <!--    <select id="findNameByWriterId">-->

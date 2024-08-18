@@ -103,4 +103,19 @@ public class SupportServicelmpl implements SupportService{
         return true;
     }
 
+    //문의하기 수정
+    public boolean updateSupport(TbSupport support){
+
+        System.out.println(support.getSupport_Id());
+        System.out.println(support.getTitle());
+        System.out.println(support.getDetail());
+        System.out.println(support.getPublic_Status());
+        System.out.println(support.getCategory());
+        System.out.println(support.getAnswer());
+
+        supportMapper.editSupport(support);
+
+        return true;
+    }
+
 }

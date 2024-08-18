@@ -15,7 +15,9 @@ public interface SupportMapper {
 
     TbSupport findById(String id); //SUPPORT_ID로 문의 검색
 
-    void addSupport(TbSupport member); // 문의하기 추가
+    void addSupport(TbSupport support); // 문의하기 추가
+
+    void editSupport(TbSupport support); // 문의하기 수정
 
     // 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정
 //    String writerName findNameByWriterId(String writerId); // id로 사용자 아이디 검색
