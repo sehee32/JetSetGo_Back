@@ -19,6 +19,8 @@ public interface SupportMapper {
 
     void editSupport(TbSupport support); // 문의하기 수정
 
+    void removeSupport(String id); // 문의하기 삭제
+
     // 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정
 //    String writerName findNameByWriterId(String writerId); // id로 사용자 아이디 검색
 

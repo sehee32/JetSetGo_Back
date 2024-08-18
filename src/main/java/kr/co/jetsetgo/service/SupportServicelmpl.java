@@ -118,4 +118,15 @@ public class SupportServicelmpl implements SupportService{
         return true;
     }
 
+    //문의하기 수정
+    public boolean deleteSupport(Map<String, String> supportIdMap){
+        String supportId = supportIdMap.get("supportId");
+
+        System.out.println(supportId);
+
+        supportMapper.removeSupport(supportId);
+
+        return true;
+    }
+
 }

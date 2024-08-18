@@ -57,7 +57,6 @@ public class SupportContoller {
     public boolean supportAdd(@RequestBody(required = false) TbSupport support) {
         System.out.println("문의하기: " + support);
         boolean result = SupportService.insertSupport(support);
-        // data에 해당하는 값 받아옴
         return result;
     }
 
@@ -66,7 +65,13 @@ public class SupportContoller {
     public boolean supportEdit(@RequestBody(required = false) TbSupport support) {
         System.out.println("문의수정: " + support);
         boolean result = SupportService.updateSupport(support);
-        // data에 해당하는 값 받아옴
+        return result;
+    }
+
+    //문의하기 삭제
+    @PostMapping(value = "/supportRemove", produces = "application/json; charset=utf-8")
+    public boolean supportRemove(@RequestBody(required = false) Map<String, String> supportIdMap) {
+        boolean result = SupportService.deleteSupport(supportIdMap);
         return result;
     }
 

@@ -38,6 +38,12 @@
         WHERE SUPPORT_ID = #{support_Id}
     </update>
 
+    <!-- 문의하기  삭제 -->
+    <delete id="removeSupport">
+        DELETE FROM SUPPORT WHERE SUPPORT_ID = #{id}
+    </delete>
+
+
 
     <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
     <!-- id로 사용자 아이디 검색 -->
