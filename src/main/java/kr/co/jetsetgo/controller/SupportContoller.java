@@ -1,6 +1,5 @@
 package kr.co.jetsetgo.controller;
 
-import kr.co.jetsetgo.model.SupportDto;
 import kr.co.jetsetgo.model.TbSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
