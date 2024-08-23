@@ -1,8 +1,8 @@
 package kr.co.jetsetgo.model.test;
 
-import kr.co.jetsetgo.model.TbMembers;
+import kr.co.jetsetgo.model.TbMembersDto;
 
-public class MemberDto extends TbMembers {
+public class MemberDto extends TbMembersDto {
 
 
 }

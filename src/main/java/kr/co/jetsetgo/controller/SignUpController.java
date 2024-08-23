@@ -1,6 +1,7 @@
 package kr.co.jetsetgo.controller;
 import kr.co.jetsetgo.dbio.SignUpMapper;
 import kr.co.jetsetgo.model.SignUpDto;
+import kr.co.jetsetgo.model.TbMembersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,24 +35,6 @@ public class SignUpController {
         return response;
     }
 
-//    @PostMapping("/identity-verifications")
-//    public ResponseEntity<String> verifyIdentity(@RequestBody IdentityVerificationRequest request) {
-//        logger.info("본인인증 요청 정보: {}", request);
-//
-//        try {
-//            // PortoneApiV2Util을 사용하여 본인인증 요청 전송
-//            String response = PortoneApiV2Util.sendIdentityVerificationRequest(
-//                    request.getCustomerId(), request.getName(), request.getBirthDate(),
-//                    request.getGender(), request.getCi(), request.getDi());
-//
-//            logger.info("본인인증 API 응답: {}", response);
-//
-//            return ResponseEntity.ok("본인인증 요청 성공");
-//        } catch (IOException e) {
-//            logger.error("본인인증 요청 중 오류 발생", e);
-//            return ResponseEntity.status(500).body("본인인증 요청 실패");
-//        }
-//    }
 
 }
 

@@ -1,7 +1,7 @@
 package kr.co.jetsetgo.model;
 
 
-public class TbMembers {
+public class TbMembersDto {
 
   private long membernum;
   private String name;
