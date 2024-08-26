@@ -19,9 +19,9 @@ public class SignUpController {
 //    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     @PostMapping("/signup")
-    public String signUp(@RequestBody SignUpDto signUpDto) {
+    public String signUp(@RequestBody TbMembersDto tbMembersDto) {
 //        logger.info("회원가입 정보: {}", signUpDto);  // 회원가입할 때 입력한 정보를 로그로 출력 //
-        signUpMapper.insertMember(signUpDto);
+        signUpMapper.insertMember(tbMembersDto);
         return "회원가입 성공";
     }
 
@@ -29,7 +29,7 @@ public class SignUpController {
     @PostMapping("/checkUsername")
     public Map<String, Boolean> checkUsername(@RequestBody Map<String, String> usernameMap) {
         String username = usernameMap.get("username");
-        SignUpDto existingMember = signUpMapper.findByUsername(username);
+        TbMembersDto existingMember = signUpMapper.findByUsername(username);
         Map<String, Boolean> response = new HashMap<>();
         response.put("exists", existingMember != null);
         return response;

@@ -8,8 +8,8 @@ public class TbMembersDto {
   private String username;
   private String password;
   private java.sql.Date birthdate;
-  private String phonenumber;
-  private long agreeterms;
+  private String phoneNumber;
+  private boolean agreeTerms;
 
 
   public long getMembernum() {
@@ -57,21 +57,21 @@ public class TbMembersDto {
   }
 
 
-  public String getPhonenumber() {
-    return phonenumber;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
-  public void setPhonenumber(String phonenumber) {
-    this.phonenumber = phonenumber;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 
 
-  public long getAgreeterms() {
-    return agreeterms;
+  public boolean getAgreeTerms() {
+    return agreeTerms;
   }
 
-  public void setAgreeterms(long agreeterms) {
-    this.agreeterms = agreeterms;
+  public void setAgreeTerms(boolean agreeTerms) {
+    this.agreeTerms = agreeTerms;
   }
 
 }

@@ -12,7 +12,7 @@
         VALUES (#{name}, #{username}, #{password}, #{birthdate}, #{phoneNumber}, #{agreeTerms})
     </insert>
 
-    <select id="findByUsername" resultType="kr.co.jetsetgo.model.SignUpDto">
+    <select id="findByUsername" resultType="kr.co.jetsetgo.model.TbMembersDto">
         <!-- USERNAME 찾는 쿼리. 결과는 memberDto resultMap에 매핑 -->
         SELECT * FROM MEMBERS WHERE USERNAME = #{username}
     </select>
