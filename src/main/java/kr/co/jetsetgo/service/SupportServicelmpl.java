@@ -6,7 +6,6 @@ import kr.co.jetsetgo.model.TbSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,12 +85,11 @@ public class SupportServicelmpl implements SupportService{
     //문의하기 추가
     public boolean insertSupport(TbSupport support){
         // 아이디 변경 가능한지 문의 필요
-//        String writerName = signUpMapper.findNameByWriterId(support.getWriter_Id()); //id로 사용자 아이디 검색
-//        support.setWriter_Name(writerName);
-
-        support.setWriter_Name("user001"); //임시 아이디 입력
+        long writerId = supportMapper.findIdByWriterName(support.getWriter_Name()); // 사용자 아이디로 id 검색
+        support.setWriter_Id(writerId);
 
         System.out.println(support.getWriter_Id());
+        System.out.println(support.getWriter_Name());
         System.out.println(support.getTitle());
         System.out.println(support.getDetail());
         System.out.println(support.getPublic_Status());

@@ -1,12 +1,13 @@
 package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.model.TbSupport;
+import kr.co.jetsetgo.service.SupportService;
+import kr.co.jetsetgo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import kr.co.jetsetgo.service.SupportService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,9 @@ public class SupportContoller {
 
     @Autowired
     private SupportService SupportService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * Sample Controller
@@ -72,6 +76,17 @@ public class SupportContoller {
     public boolean supportRemove(@RequestBody(required = false) Map<String, String> supportIdMap) {
         boolean result = SupportService.deleteSupport(supportIdMap);
         return result;
+    }
+
+    //로그인된 토큰 ID 값 가져오기
+    @PostMapping(value = "/getUserInfo", produces = "application/json; charset=utf-8")
+    public String getUserInfo(@RequestBody(required = false) Map<String, String> tokenMap) {
+        String token = tokenMap.get("token");
+        // 사용자 이름 추출
+        String username = jwtUtil.extractUsername(token);
+        System.out.println("사용자 아이디: " + username);
+        // 사용자 정보 반환
+        return username;
     }
 
 }

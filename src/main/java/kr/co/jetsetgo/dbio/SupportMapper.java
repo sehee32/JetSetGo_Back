@@ -22,8 +22,7 @@ public interface SupportMapper {
 
     String findPasswordByWriterId(long writerId); // id로 작성자 비밀번호 검색
 
-    // 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정
-//    String writerName findNameByWriterId(String writerId); // id로 사용자 아이디 검색
+    long findIdByWriterName(String writerName); // 사용자 아이디로 id 검색
 
 
 

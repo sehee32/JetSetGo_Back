@@ -48,12 +48,10 @@
         SELECT PASSWORD FROM MEMBERS WHERE MEMBERNUM = #{writerId}
     </select>
 
-
-    <!-- 충돌 방지를 위해 임시로 여기에 작성 > 리뷰 이후에 수정할 예정 -->
-    <!-- id로 사용자 아이디 검색 -->
-<!--    <select id="findNameByWriterId">-->
-<!--        SELECT USERNAME FROM MEMBERS WHERE MEMBERNUM = #{writerId}-->
-<!--    </select>-->
+    <!-- 사용자 아이디로 id 검색 -->
+    <select id="findIdByWriterName" resultType="long">
+        SELECT MEMBERNUM FROM MEMBERS WHERE USERNAME = #{writerName}
+    </select>
 
 
 
