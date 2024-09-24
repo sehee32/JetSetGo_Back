@@ -1,4 +1,4 @@
-﻿package kr.co.jetsetgo.controller;
+package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.service.HelloWordService;
 import kr.co.jetsetgo.util.ApiUtil;

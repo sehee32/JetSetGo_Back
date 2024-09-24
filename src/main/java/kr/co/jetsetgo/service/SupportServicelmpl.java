@@ -72,9 +72,9 @@ public class SupportServicelmpl implements SupportService{
         System.out.println(password);
 
         // 비밀번호 암호화 할 것인지 문의 필요, 로그인한 사용자만 확인 가능으로 할 것인지도 문의 필요(우선 비번만 맞으면 진입 가능으로 구현)
-//        TbSupport support = supportMapper.findById(supportId);
-//        String writerPassword = signUpMapper.findPasswordByWriterId(support.getWriter_Id()); //id로 작성자 비밀번호 검색
-        String writerPassword ="test"; //임시 비밀번호 입력
+        TbSupport support = supportMapper.findById(supportId);
+        String writerPassword = supportMapper.findPasswordByWriterId(support.getWriter_Id()); //id로 작성자 비밀번호 검색
+//        String writerPassword ="test"; //임시 비밀번호 입력
 
         if (writerPassword.equals(password)){
             return true;
