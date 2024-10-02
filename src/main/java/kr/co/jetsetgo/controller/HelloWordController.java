@@ -1,14 +1,11 @@
 package kr.co.jetsetgo.controller;
 
 import kr.co.jetsetgo.service.HelloWordService;
-import kr.co.jetsetgo.util.ApiUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -31,20 +28,20 @@ public class HelloWordController {
         return helloWordService.selectHelloWorld(data);
     }
 
-    @GetMapping("/Hello2")
-    public String helloWorld2() throws IOException {
-
-        //파라미터
-        String origin = "ICN"; // 출발지 공항 코드 (인천 국제공항)
-        String destination = "JFK"; // 도착지 공항 코드 (JFK 국제공항)
-        String departureDate = "2024-09-20"; // 출발 날짜
-        int adults = 1; // 성인 승객 수
-        int children = 0; // 어린이 승객 수
-        String travelClass = "ECONOMY"; // 여행 클래스
-        boolean nonStop = true; // 직항 여부
-
-        return ApiUtil.searchFlights(origin, destination, departureDate, adults, children, travelClass, nonStop);
-    }
+//    @GetMapping("/Hello2")
+//    public String helloWorld2() throws IOException {
+//
+//        //파라미터
+//        String origin = "ICN"; // 출발지 공항 코드
+//        String destination = "JFK"; // 도착지 공항 코드 (JFK 국제공항)
+//        String departureDate = "2024-10-20"; // 출발 날짜
+//        int adults = 1; // 성인 승객 수
+//        int children = 0; // 어린이 승객 수
+//        String travelClass = "ECONOMY"; // 여행 클래스
+//        boolean nonStop = true; // 직항 여부
+//
+//        return ApiUtil.searchFlights(origin, destination, departureDate, adults, children, travelClass, nonStop);
+//    }
 
     @GetMapping(value = "/Hello3")
     public String HelloWorld3(@RequestParam String data2) {
