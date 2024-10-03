@@ -34,5 +34,12 @@ public class MyPageContoller {
         return result;
     }
 
+    //사용자 정보 변경
+    @PostMapping(value = "/myPageUserInfoEdit", produces = "application/json; charset=utf-8")
+    public boolean myPageUserInfoEdit(@RequestBody(required = false) Map<String, String> userInfoMap){
+        boolean result = myPageService.updateUserInfo(userInfoMap);
+        return result;
+    }
+
 
 }

@@ -5,6 +5,8 @@ import kr.co.jetsetgo.model.TbMembersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class MyPageServiceImpl implements MyPageService{
 
@@ -17,6 +19,16 @@ public class MyPageServiceImpl implements MyPageService{
         TbMembersDto result = myPageMapper.findUserInfoByUserName(username);
 
         return result;
+    }
+
+    //사용자 정보 변경
+    public boolean updateUserInfo(Map<String, String> userInfoMap) {
+        String id = userInfoMap.get("id");
+        String contact = userInfoMap.get("contact");
+
+        myPageMapper.editUserInfo(id, contact);
+
+        return true;
     }
 
 }

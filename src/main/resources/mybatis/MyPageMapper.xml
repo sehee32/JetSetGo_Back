@@ -10,4 +10,11 @@
         SELECT * FROM MEMBERS WHERE USERNAME = #{userName}
     </select>
 
+    <!-- 사용자 정보  수정 -->
+    <update id="editUserInfo">
+        UPDATE MEMBERS
+        SET PHONENUMBER = #{contact}
+        WHERE USERNAME = #{id}
+    </update>
+
 </mapper>

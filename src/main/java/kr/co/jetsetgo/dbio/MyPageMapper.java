@@ -8,4 +8,5 @@ public interface MyPageMapper {
 
     TbMembersDto findUserInfoByUserName(String userName); //사용자 로그인 ID로 검색
 
+    void editUserInfo(String id, String contact); // 사용자 정보 수정
 }
