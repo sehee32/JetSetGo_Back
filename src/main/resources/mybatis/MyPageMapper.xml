@@ -17,4 +17,11 @@
         WHERE USERNAME = #{id}
     </update>
 
+    <!-- 사용자 비밀번호 수정 -->
+    <update id="editUserPassword">
+        UPDATE MEMBERS
+        SET PASSWORD = #{password}
+        WHERE USERNAME = #{id}
+    </update>
+
 </mapper>

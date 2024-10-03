@@ -31,4 +31,14 @@ public class MyPageServiceImpl implements MyPageService{
         return true;
     }
 
+    //사용자 비밀번호 변경
+    public boolean updateUserPassword(Map<String, String> userInfoMap) {
+        String id = userInfoMap.get("id");
+        String password = userInfoMap.get("password");
+
+        myPageMapper.editUserPassword(id, password);
+
+        return true;
+    }
+
 }

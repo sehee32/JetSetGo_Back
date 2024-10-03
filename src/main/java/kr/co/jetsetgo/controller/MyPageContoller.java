@@ -41,5 +41,12 @@ public class MyPageContoller {
         return result;
     }
 
+    //사용자 비밀번호 변경
+    @PostMapping(value = "/myPageUserPasswordEdit", produces = "application/json; charset=utf-8")
+    public boolean myPageUserPasswordEdit(@RequestBody(required = false) Map<String, String> userInfoMap){
+        boolean result = myPageService.updateUserPassword(userInfoMap);
+        return result;
+    }
+
 
 }
