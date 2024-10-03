@@ -1,6 +1,5 @@
 package kr.co.jetsetgo.service;
 
-import kr.co.jetsetgo.dbio.SignUpMapper;
 import kr.co.jetsetgo.dbio.SupportMapper;
 import kr.co.jetsetgo.model.TbSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import java.util.Map;
 //import java.sql.*;
 
 @Service
-public class SupportServicelmpl implements SupportService{
+public class SupportServiceImpl implements SupportService{
 
     @Autowired
     private SupportMapper supportMapper;
-    @Autowired
-    private SignUpMapper signUpMapper;
 
     //1:1문의 검색
     public List<TbSupport> selectSupports(Map<String, String> SearchMap) {

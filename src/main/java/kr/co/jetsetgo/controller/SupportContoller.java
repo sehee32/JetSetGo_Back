@@ -18,7 +18,7 @@ import java.util.Map;
 public class SupportContoller {
 
     @Autowired
-    private SupportService SupportService;
+    private SupportService supportService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -28,7 +28,7 @@ public class SupportContoller {
      * 호출 예시 : http://localhost:8080/api/Hello?data=호출테스트
      * 결과 : 호출테스트 Hello Word
      *
-     * @param data
+     * @param SearchMap
      * @return
      */
 
@@ -36,7 +36,7 @@ public class SupportContoller {
     @PostMapping(value = "/supportSearch", produces = "application/json; charset=utf-8")
     public List<TbSupport> supportSearch(@RequestBody(required = false) Map<String, String> SearchMap) {
         System.out.println("1:1문의 검색: " + SearchMap);
-        List<TbSupport> result = SupportService.selectSupports(SearchMap);
+        List<TbSupport> result = supportService.selectSupports(SearchMap);
         System.out.println(result);
         return result;
     }
@@ -44,14 +44,14 @@ public class SupportContoller {
     //문의하기 상세 진입
     @PostMapping(value = "/enterSupport", produces = "application/json; charset=utf-8")
     public TbSupport enterSupport(@RequestBody(required = false) Map<String, String> supportIdMap) {
-        TbSupport result = SupportService.selectSupport(supportIdMap);
+        TbSupport result = supportService.selectSupport(supportIdMap);
         return result;
     }
 
     //문의하기 상세 진입시 비밀번호 확인
     @PostMapping(value = "/supportCheckPassword", produces = "application/json; charset=utf-8")
     public boolean supportCheckPassword(@RequestBody(required = false) Map<String, String> supportIdMap) {
-        boolean result = SupportService.selectSupportPassword(supportIdMap);
+        boolean result = supportService.selectSupportPassword(supportIdMap);
         return result;
     }
 
@@ -59,7 +59,7 @@ public class SupportContoller {
     @PostMapping(value = "/supportAdd", produces = "application/json; charset=utf-8")
     public boolean supportAdd(@RequestBody(required = false) TbSupport support) {
         System.out.println("문의하기: " + support);
-        boolean result = SupportService.insertSupport(support);
+        boolean result = supportService.insertSupport(support);
         return result;
     }
 
@@ -67,14 +67,14 @@ public class SupportContoller {
     @PostMapping(value = "/supportEdit", produces = "application/json; charset=utf-8")
     public boolean supportEdit(@RequestBody(required = false) TbSupport support) {
         System.out.println("문의수정: " + support);
-        boolean result = SupportService.updateSupport(support);
+        boolean result = supportService.updateSupport(support);
         return result;
     }
 
     //문의하기 삭제
     @PostMapping(value = "/supportRemove", produces = "application/json; charset=utf-8")
     public boolean supportRemove(@RequestBody(required = false) Map<String, String> supportIdMap) {
-        boolean result = SupportService.deleteSupport(supportIdMap);
+        boolean result = supportService.deleteSupport(supportIdMap);
         return result;
     }
 
