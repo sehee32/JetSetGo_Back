@@ -23,22 +23,33 @@ public class MyPageServiceImpl implements MyPageService{
 
     //사용자 정보 변경
     public boolean updateUserInfo(Map<String, String> userInfoMap) {
-        String id = userInfoMap.get("id");
+        String id = userInfoMap.get("userId");
         String contact = userInfoMap.get("contact");
+        boolean isUpdated = myPageMapper.editUserInfo(id, contact);
+        if (isUpdated) {
+            System.out.println("Update successful");
+        } else {
+            System.out.println("Update failed");
+        }
 
-        myPageMapper.editUserInfo(id, contact);
 
-        return true;
+        return isUpdated;
     }
 
     //사용자 비밀번호 변경
     public boolean updateUserPassword(Map<String, String> userInfoMap) {
-        String id = userInfoMap.get("id");
+        String id = userInfoMap.get("userId");
         String password = userInfoMap.get("password");
+        boolean isUpdated = myPageMapper.editUserPassword(id, password);
 
-        myPageMapper.editUserPassword(id, password);
+        if (isUpdated) {
+            System.out.println("Update successful");
+        } else {
+            System.out.println("Update failed");
+        }
 
-        return true;
+
+        return isUpdated;
     }
 
 }

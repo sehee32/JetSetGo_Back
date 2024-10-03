@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MyPageMapper {
 
     TbMembersDto findUserInfoByUserName(String userName); //사용자 로그인 ID로 검색
-    void editUserInfo(String id, String contact); // 사용자 정보 수정
-    void editUserPassword(String id, String password); // 사용자 정보 수정
+    boolean editUserInfo(String id, String contact); // 사용자 정보 수정
+    boolean editUserPassword(String id, String password); // 사용자 정보 수정
 }
