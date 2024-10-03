@@ -32,7 +32,6 @@ public class MyPageServiceImpl implements MyPageService{
             System.out.println("Update failed");
         }
 
-
         return isUpdated;
     }
 
@@ -48,8 +47,15 @@ public class MyPageServiceImpl implements MyPageService{
             System.out.println("Update failed");
         }
 
-
         return isUpdated;
+    }
+
+    //사용자 탈퇴
+    public boolean deleteUser(Map<String, String> userInfoMap) {
+        String id = userInfoMap.get("id");
+        myPageMapper.removeUser(id);
+
+        return true;
     }
 
 }

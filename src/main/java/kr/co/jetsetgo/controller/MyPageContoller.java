@@ -48,5 +48,12 @@ public class MyPageContoller {
         return result;
     }
 
+    //사용자 탈퇴
+    @PostMapping(value = "/myPageUserRemove", produces = "application/json; charset=utf-8")
+    public boolean myPageUserRemove(@RequestBody(required = false) Map<String, String> userInfoMap){
+        boolean result = myPageService.deleteUser(userInfoMap);
+        return result;
+    }
+
 
 }

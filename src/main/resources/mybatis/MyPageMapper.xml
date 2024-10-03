@@ -20,4 +20,9 @@
         UPDATE MEMBERS SET PASSWORD = #{password} WHERE USERNAME = #{id}
     </update>
 
+    <!-- 사용자  삭제 -->
+    <delete id="removeUser">
+        DELETE FROM MEMBERS WHERE USERNAME = #{id}
+    </delete>
+
 </mapper>

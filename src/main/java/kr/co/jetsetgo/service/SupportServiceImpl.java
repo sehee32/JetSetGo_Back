@@ -112,7 +112,7 @@ public class SupportServiceImpl implements SupportService{
         return true;
     }
 
-    //문의하기 수정
+    //문의하기 삭제
     public boolean deleteSupport(Map<String, String> supportIdMap){
         String supportId = supportIdMap.get("supportId");
 
