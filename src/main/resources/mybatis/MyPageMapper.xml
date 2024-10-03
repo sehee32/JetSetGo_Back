@@ -25,4 +25,31 @@
         DELETE FROM MEMBERS WHERE USERNAME = #{id}
     </delete>
 
+    <!-- 예약 검색 -->
+    <select id="findReservationByUserId" resultType="kr.co.jetsetgo.model.ReservationDto">
+        SELECT
+            r.MEMBER_ID,
+            r.RESERVATION_ID,
+            r.RESERVATION_DATE,
+            rf.RESERVATION_FLIGHTS_ID,
+            r.STATUS,
+            f.ID,
+            f.ORIGINLOCATIONCODE,
+            f.DESTINATIONLOCATIONCODE,
+            f.DEPARTURE_CITY,
+            f.ARRIVAL_CITY,
+            f.DEPARTURE_TIME,
+            f.ARRIVAL_TIME
+        FROM
+            RESERVATION r
+                JOIN
+            RESERVATION_FLIGHTS rf ON r.RESERVATION_ID = rf.RESERVATION_ID
+                JOIN
+            FLIGHTS f ON rf.FLIGHT_ID = f.ID
+        WHERE
+            r.MEMBER_ID = #{userId}
+        ORDER BY
+            r.RESERVATION_DATE DESC;
+    </select>
+
 </mapper>

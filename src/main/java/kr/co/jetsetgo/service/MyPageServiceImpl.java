@@ -1,10 +1,12 @@
 package kr.co.jetsetgo.service;
 
 import kr.co.jetsetgo.dbio.MyPageMapper;
+import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -58,4 +60,12 @@ public class MyPageServiceImpl implements MyPageService{
         return true;
     }
 
+    //예약 리스트 검색
+    public List<ReservationDto> selectReservations(Map<String, String> ReservationMap) {
+        String userId = ReservationMap.get("userId");
+
+        List<ReservationDto> results = myPageMapper.findReservationByUserId(userId);
+
+        return results;
+    }
 }

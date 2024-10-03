@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.controller;
 
+import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
 import kr.co.jetsetgo.service.MyPageService;
 import kr.co.jetsetgo.util.JwtUtil;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -52,6 +54,14 @@ public class MyPageContoller {
     @PostMapping(value = "/myPageUserRemove", produces = "application/json; charset=utf-8")
     public boolean myPageUserRemove(@RequestBody(required = false) Map<String, String> userInfoMap){
         boolean result = myPageService.deleteUser(userInfoMap);
+        return result;
+    }
+
+    //예약 리스트 검색
+    @PostMapping(value = "/myPageReservations", produces = "application/json; charset=utf-8")
+    public List<ReservationDto> myPageReservations(@RequestBody(required = false) Map<String, String> ReservationMap){
+        List<ReservationDto> result = myPageService.selectReservations(ReservationMap);
+        System.out.println(result);
         return result;
     }
 
