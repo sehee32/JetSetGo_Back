@@ -64,7 +64,7 @@ public class ApiUtil {
 
         String urlString = String.format(
                 "https://test.api.amadeus.com/v2/shopping/flight-offers?" +
-                        "originLocationCode=%s&destinationLocationCode=%s&departureDate=%s&adults=%d&children=%d&travelClass=%s&nonStop=%s&max=5",
+                        "originLocationCode=%s&destinationLocationCode=%s&departureDate=%s&adults=%d&children=%d&travelClass=%s&nonStop=%s&max=30&currencyCode=KRW",
                 origin, destination, departureDate, adults, children, travelClass, nonStop);
 
         URL url = new URL(urlString);
@@ -90,16 +90,16 @@ public class ApiUtil {
 
             for (int i = 0; i < flightOffers.length(); i++) {
                 JSONObject offer = flightOffers.getJSONObject(i);
-                JSONObject itinerary = offer.getJSONArray("itineraries").getJSONObject(0);
-                JSONObject segment = itinerary.getJSONArray("segments").getJSONObject(0);
+                JSONObject itinerary = offer.getJSONArray("itineraries").getJSONObject(0);  // 여정
+                JSONObject segment = itinerary.getJSONArray("segments").getJSONObject(0);   // 구간
 
                 JSONObject flightData = new JSONObject();
-                flightData.put("id", offer.getString("id"));
-                flightData.put("departureTime", segment.getJSONObject("departure").getString("at"));
-                flightData.put("arrivalTime", segment.getJSONObject("arrival").getString("at"));
-                flightData.put("duration", itinerary.getString("duration"));
-                flightData.put("price", offer.getJSONObject("price").getString("total"));
-                flightData.put("currency", offer.getJSONObject("price").getString("currency"));
+                flightData.put("id", offer.getString("id"));    // 항공편 ID
+                flightData.put("departureTime", segment.getJSONObject("departure").getString("at"));    // 출발시간
+                flightData.put("arrivalTime", segment.getJSONObject("arrival").getString("at"));    // 도착시간
+                flightData.put("duration", itinerary.getString("duration"));    // 소요시간
+                flightData.put("price", offer.getJSONObject("price").getString("total"));   // 항공편 총 가격
+                flightData.put("currency", offer.getJSONObject("price").getString("currency")); // 가격 통화
 
                 resultArray.put(flightData);
             }

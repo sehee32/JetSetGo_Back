@@ -27,6 +27,7 @@ public class FlightSearchController {
                                 @RequestParam String travelClass,
                                 @RequestParam boolean nonStop) throws IOException {
         // API 호출 및 결과 반환
+
         return ApiUtil.searchFlights(origin, destination, departureDate, adults, children, travelClass, nonStop);
     }
 
