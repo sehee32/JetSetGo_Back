@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.controller;
 
+import kr.co.jetsetgo.model.ReservationDetailDto;
 import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
 import kr.co.jetsetgo.service.MyPageService;
@@ -61,6 +62,14 @@ public class MyPageContoller {
     @PostMapping(value = "/myPageReservations", produces = "application/json; charset=utf-8")
     public List<ReservationDto> myPageReservations(@RequestBody(required = false) Map<String, String> ReservationMap){
         List<ReservationDto> result = myPageService.selectReservations(ReservationMap);
+        System.out.println(result);
+        return result;
+    }
+
+    //예약 상세 검색
+    @PostMapping(value = "/myPageReservationDetails", produces = "application/json; charset=utf-8")
+    public List<ReservationDetailDto> myPageReservationDetails(@RequestBody(required = false) Map<String, String> ReservationMap){
+        List<ReservationDetailDto> result = myPageService.selectReservationDetails(ReservationMap);
         System.out.println(result);
         return result;
     }

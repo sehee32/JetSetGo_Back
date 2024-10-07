@@ -1,6 +1,7 @@
 package kr.co.jetsetgo.service;
 
 import kr.co.jetsetgo.dbio.MyPageMapper;
+import kr.co.jetsetgo.model.ReservationDetailDto;
 import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,33 @@ public class MyPageServiceImpl implements MyPageService{
                 reservation.setArrivalDate(arrivalDateTime.toLocalDate());// 날짜만 추출
                 reservation.setArrivalTime(arrivalDateTime.toLocalTime());// 시간만 추출
 
+            } else {
+                System.out.println("출발 정보가 없습니다.");
+            }
+        }
+
+        return results;
+    }
+
+    //예약 상세 검색
+    public List<ReservationDetailDto> selectReservationDetails(Map<String, String> ReservationMap) {
+        String id = ReservationMap.get("id");
+
+        List<ReservationDetailDto> results = myPageMapper.findReservationByReservationId(id);
+
+        for (ReservationDetailDto reservation : results) {
+
+            LocalDateTime departureDateTime = reservation.getDeparture_Time();
+            LocalDateTime arrivalDateTime = reservation.getArrival_Time();
+            int durationInMinutes = reservation.getDurationInMinutes();
+
+            if (departureDateTime != null && arrivalDateTime != null) {
+                // 날짜와 시간 추출
+                reservation.setDepartureDate(departureDateTime.toLocalDate());// 날짜만 추출
+                reservation.setDepartureTime(departureDateTime.toLocalTime());// 시간만 추출
+                reservation.setArrivalDate(arrivalDateTime.toLocalDate());// 날짜만 추출
+                reservation.setArrivalTime(arrivalDateTime.toLocalTime());// 시간만 추출
+
                 // 출력 (또는 다른 로직)
                 System.out.println("출발 날짜: " + reservation.getDepartureDate());
                 System.out.println("출발 시간: " + reservation.getDepartureTime());
@@ -87,6 +115,19 @@ public class MyPageServiceImpl implements MyPageService{
             } else {
                 System.out.println("출발 정보가 없습니다.");
             }
+
+            if (durationInMinutes != 0) {
+                int hours = durationInMinutes / 60; // 총 시간 계산
+                int minutes = durationInMinutes % 60; // 남은 분 계산
+                reservation.setDuration(String.format("%d시간 %d분", hours, minutes));
+
+                // 출력 (또는 다른 로직)
+                System.out.println("소요시간: " + reservation.getDuration());
+            }
+
+            //확인용
+            System.out.println("출발 도시 " + reservation.getDeparture_City());
+
         }
 
         return results;

@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.service;
 
+import kr.co.jetsetgo.model.ReservationDetailDto;
 import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
 
@@ -12,4 +13,5 @@ public interface MyPageService {
     public boolean updateUserPassword(Map<String, String> userInfoMap); //사용자 정보 변경
     public boolean deleteUser(Map<String, String> userInfoMap); //사용자 탈퇴
     public List<ReservationDto> selectReservations(Map<String, String> ReservationMap); //예약 리스트 검색
+    public List<ReservationDetailDto> selectReservationDetails(Map<String, String> ReservationMap); //예약 상세 검색
 }
