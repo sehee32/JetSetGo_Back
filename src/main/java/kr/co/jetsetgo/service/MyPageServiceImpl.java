@@ -6,6 +6,7 @@ import kr.co.jetsetgo.model.TbMembersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,28 @@ public class MyPageServiceImpl implements MyPageService{
         String userId = ReservationMap.get("userId");
 
         List<ReservationDto> results = myPageMapper.findReservationByUserId(userId);
+
+        for (ReservationDto reservation : results) {
+
+            LocalDateTime departureDateTime = reservation.getDeparture_Time();
+            LocalDateTime arrivalDateTime = reservation.getArrival_Time();
+
+            if (departureDateTime != null && arrivalDateTime != null) {
+                // 날짜와 시간 추출
+                reservation.setDepartureDate(departureDateTime.toLocalDate());// 날짜만 추출
+                reservation.setDepartureTime(departureDateTime.toLocalTime());// 시간만 추출
+                reservation.setArrivalDate(arrivalDateTime.toLocalDate());// 날짜만 추출
+                reservation.setArrivalTime(arrivalDateTime.toLocalTime());// 시간만 추출
+
+                // 출력 (또는 다른 로직)
+                System.out.println("출발 날짜: " + reservation.getDepartureDate());
+                System.out.println("출발 시간: " + reservation.getDepartureTime());
+                System.out.println("도착 날짜: " + reservation.getArrivalDate());
+                System.out.println("도착 시간: " + reservation.getArrivalTime());
+            } else {
+                System.out.println("출발 정보가 없습니다.");
+            }
+        }
 
         return results;
     }

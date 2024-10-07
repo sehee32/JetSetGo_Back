@@ -48,6 +48,13 @@
             FLIGHTS f ON rf.FLIGHT_ID = f.ID
         WHERE
             r.MEMBER_ID = #{userId}
+          AND
+                f.DEPARTURE_TIME = (
+                SELECT MIN(f2.DEPARTURE_TIME)
+                FROM FLIGHTS f2
+                         JOIN RESERVATION_FLIGHTS rf2 ON f2.ID = rf2.FLIGHT_ID
+                WHERE rf2.RESERVATION_ID = r.RESERVATION_ID
+            )
         ORDER BY
             r.RESERVATION_DATE DESC;
     </select>

@@ -1,12 +1,14 @@
 package kr.co.jetsetgo.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ReservationDto {
 
     private long member_Id;
     private long reservation_Id;
-    private java.sql.Timestamp reservation_Date;
+    private java.time.LocalDateTime reservation_Date;
     private long reservation_Flights_Id;
     private String status;
     private long id;
@@ -14,8 +16,13 @@ public class ReservationDto {
     private String destinationlocationcode;
     private String departure_City;
     private String arrival_City;
-    private java.sql.Timestamp departure_Time;
-    private java.sql.Timestamp arrival_Time;
+    private java.time.LocalDateTime departure_Time;
+    private java.time.LocalDateTime arrival_Time;
+
+    private java.time.LocalDate departureDate;
+    private java.time.LocalDate arrivalDate;
+    private java.time.LocalTime departureTime;
+    private java.time.LocalTime arrivalTime;
 
     public long getMember_Id() {
         return member_Id;
@@ -33,11 +40,11 @@ public class ReservationDto {
         this.reservation_Id = reservation_Id;
     }
 
-    public Timestamp getReservation_Date() {
+    public LocalDateTime getReservation_Date() {
         return reservation_Date;
     }
 
-    public void setReservation_Date(Timestamp reservation_Date) {
+    public void setReservation_Date(LocalDateTime reservation_Date) {
         this.reservation_Date = reservation_Date;
     }
 
@@ -97,19 +104,51 @@ public class ReservationDto {
         this.arrival_City = arrival_City;
     }
 
-    public Timestamp getDeparture_Time() {
+    public LocalDateTime getDeparture_Time() {
         return departure_Time;
     }
 
-    public void setDeparture_Time(Timestamp departure_Time) {
+    public void setDeparture_Time(LocalDateTime departure_Time) {
         this.departure_Time = departure_Time;
     }
 
-    public Timestamp getArrival_Time() {
+    public LocalDateTime getArrival_Time() {
         return arrival_Time;
     }
 
-    public void setArrival_Time(Timestamp arrival_Time) {
+    public void setArrival_Time(LocalDateTime arrival_Time) {
         this.arrival_Time = arrival_Time;
+    }
+
+    public LocalDate getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public LocalDate getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(LocalDate arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public LocalTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 }
