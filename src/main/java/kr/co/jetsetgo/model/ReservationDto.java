@@ -9,7 +9,7 @@ public class ReservationDto {
     private long member_Id;
     private long reservation_Id;
     private java.time.LocalDateTime reservation_Date;
-    private long reservation_Flights_Id;
+    private long num;
     private String status;
     private long id;
     private String originlocationcode;
@@ -48,12 +48,12 @@ public class ReservationDto {
         this.reservation_Date = reservation_Date;
     }
 
-    public long getReservation_Flights_Id() {
-        return reservation_Flights_Id;
+    public long getNum() {
+        return num;
     }
 
-    public void setReservation_Flights_Id(long reservation_Flights_Id) {
-        this.reservation_Flights_Id = reservation_Flights_Id;
+    public void setNum(long num) {
+        this.num = num;
     }
 
     public String getStatus() {

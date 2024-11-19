@@ -31,7 +31,7 @@
             r.MEMBER_ID,
             r.RESERVATION_ID,
             r.RESERVATION_DATE,
-            rf.RESERVATION_FLIGHTS_ID,
+            r.num,
             r.STATUS,
             f.ID,
             f.ORIGINLOCATIONCODE,
@@ -43,17 +43,15 @@
         FROM
             RESERVATION r
                 JOIN
-            RESERVATION_FLIGHTS rf ON r.RESERVATION_ID = rf.RESERVATION_ID
-                JOIN
-            FLIGHTS f ON rf.FLIGHT_ID = f.ID
+            FLIGHTS f ON r.FLIGHT_ID = f.ID
         WHERE
             r.MEMBER_ID = #{userId}
           AND
                 f.DEPARTURE_TIME = (
                 SELECT MIN(f2.DEPARTURE_TIME)
                 FROM FLIGHTS f2
-                         JOIN RESERVATION_FLIGHTS rf2 ON f2.ID = rf2.FLIGHT_ID
-                WHERE rf2.RESERVATION_ID = r.RESERVATION_ID
+                         JOIN RESERVATION r2 ON f2.ID = r2.FLIGHT_ID
+                WHERE r2.RESERVATION_ID = r.RESERVATION_ID
             )
         ORDER BY
             r.RESERVATION_DATE DESC;
@@ -86,9 +84,7 @@
                 JOIN
             MEMBERS M ON R.MEMBER_ID = M.MEMBERNUM
                 JOIN
-            RESERVATION_FLIGHTS RF ON R.RESERVATION_ID = RF.RESERVATION_ID
-                JOIN
-            FLIGHTS F ON RF.FLIGHT_ID = F.ID
+            FLIGHTS F ON R.FLIGHT_ID = F.ID
         WHERE
             R.RESERVATION_ID = #{id};
     </select>
