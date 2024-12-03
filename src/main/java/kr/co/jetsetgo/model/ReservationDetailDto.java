@@ -10,9 +10,12 @@ public class ReservationDetailDto {
     private long member_Id;
     private String name;
     private String phoneNumber;
+    private String passenger_Name;
+    private String phone_Number;
     private String status;
     private String trip_Type;
     private java.time.LocalDateTime reservation_Date;
+    private String passport_Number;
     private String flight_Num;
     private java.time.LocalDateTime departure_Time;
     private java.time.LocalDateTime arrival_Time;
@@ -63,6 +66,22 @@ public class ReservationDetailDto {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getPassenger_Name() {
+        return passenger_Name;
+    }
+
+    public void setPassenger_Name(String passenger_Name) {
+        this.passenger_Name = passenger_Name;
+    }
+
+    public String getPhone_Number() {
+        return phone_Number;
+    }
+
+    public void setPhone_Number(String phone_Number) {
+        this.phone_Number = phone_Number;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -85,6 +104,14 @@ public class ReservationDetailDto {
 
     public void setReservation_Date(LocalDateTime reservation_Date) {
         this.reservation_Date = reservation_Date;
+    }
+
+    public String getPassport_Number() {
+        return passport_Number;
+    }
+
+    public void setPassport_Number(String passport_Number) {
+        this.passport_Number = passport_Number;
     }
 
     public String getFlight_Num() {

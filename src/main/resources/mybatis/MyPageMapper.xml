@@ -53,6 +53,14 @@
                          JOIN RESERVATION r2 ON f2.ID = r2.FLIGHT_ID
                 WHERE r2.RESERVATION_ID = r.RESERVATION_ID
             )
+          AND
+                r.num = (
+                SELECT MIN(r3.num)
+                FROM RESERVATION r3
+                         JOIN FLIGHTS f3 ON r3.FLIGHT_ID = f3.ID
+                WHERE r3.RESERVATION_ID = r.RESERVATION_ID
+                  AND f3.DEPARTURE_TIME = f.DEPARTURE_TIME
+            )
         ORDER BY
             r.RESERVATION_DATE DESC;
     </select>
@@ -65,9 +73,12 @@
             R.MEMBER_ID,
             M.NAME,
             M.PHONENUMBER,
+            R.PASSENGER_NAME,
+            R.PHONE_NUMBER,
             R.STATUS,
             R.TRIP_TYPE,
             R.RESERVATION_DATE,
+            R.PASSPORT_NUMBER,
             F.FLIGHT_NUM,
             F.DEPARTURE_TIME,
             F.ARRIVAL_TIME,
