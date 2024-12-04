@@ -74,5 +74,12 @@ public class MyPageContoller {
         return result;
     }
 
+    //예약 취소
+    @PostMapping(value = "/myPageCancelReservation", produces = "application/json; charset=utf-8")
+    public boolean myPageCancelReservation(@RequestBody(required = false) Map<String, String> reservationMap){
+        boolean result = myPageService.updateReservationStatus(reservationMap);
+        return result;
+    }
+
 
 }

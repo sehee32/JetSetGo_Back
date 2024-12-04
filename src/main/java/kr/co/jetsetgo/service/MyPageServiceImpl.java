@@ -127,9 +127,27 @@ public class MyPageServiceImpl implements MyPageService{
 
             //확인용
             System.out.println("출발 도시 " + reservation.getDeparture_City());
+            System.out.println("상태 " + reservation.getStatus());
+            System.out.println("여권 번호 " + reservation.getPassport_Number());
+            System.out.println("여권 만료일 " + reservation.getPassport_ExpiryDate());
+            System.out.println("여권 발행국 " + reservation.getPassport_IssuingCountry());
 
         }
 
         return results;
+    }
+
+    //예약 취소
+    public boolean updateReservationStatus(Map<String, String> reservationMap) {
+        String id = reservationMap.get("id");
+        boolean isUpdated = myPageMapper.cancelReservation(id);
+        System.out.println(id);
+        if (isUpdated) {
+            System.out.println("Update successful");
+        } else {
+            System.out.println("Update failed");
+        }
+
+        return isUpdated;
     }
 }

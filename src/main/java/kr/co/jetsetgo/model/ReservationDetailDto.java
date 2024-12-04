@@ -16,6 +16,8 @@ public class ReservationDetailDto {
     private String trip_Type;
     private java.time.LocalDateTime reservation_Date;
     private String passport_Number;
+    private String passport_ExpiryDate;
+    private String passport_IssuingCountry;
     private String flight_Num;
     private java.time.LocalDateTime departure_Time;
     private java.time.LocalDateTime arrival_Time;
@@ -112,6 +114,22 @@ public class ReservationDetailDto {
 
     public void setPassport_Number(String passport_Number) {
         this.passport_Number = passport_Number;
+    }
+
+    public String getPassport_ExpiryDate() {
+        return passport_ExpiryDate;
+    }
+
+    public void setPassport_ExpiryDate(String passport_ExpiryDate) {
+        this.passport_ExpiryDate = passport_ExpiryDate;
+    }
+
+    public String getPassport_IssuingCountry() {
+        return passport_IssuingCountry;
+    }
+
+    public void setPassport_IssuingCountry(String passport_IssuingCountry) {
+        this.passport_IssuingCountry = passport_IssuingCountry;
     }
 
     public String getFlight_Num() {

@@ -14,4 +14,5 @@ public interface MyPageService {
     public boolean deleteUser(Map<String, String> userInfoMap); //사용자 탈퇴
     public List<ReservationDto> selectReservations(Map<String, String> ReservationMap); //예약 리스트 검색
     public List<ReservationDetailDto> selectReservationDetails(Map<String, String> ReservationMap); //예약 상세 검색
+    public boolean updateReservationStatus(Map<String, String> reservationMap); //예약 취소
 }

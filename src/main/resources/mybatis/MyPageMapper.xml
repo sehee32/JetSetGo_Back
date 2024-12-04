@@ -79,6 +79,8 @@
             R.TRIP_TYPE,
             R.RESERVATION_DATE,
             R.PASSPORT_NUMBER,
+            R.PASSPORT_EXPIRYDATE,
+            R.PASSPORT_ISSUINGCOUNTRY,
             F.FLIGHT_NUM,
             F.DEPARTURE_TIME,
             F.ARRIVAL_TIME,
@@ -99,5 +101,10 @@
         WHERE
             R.RESERVATION_ID = #{id};
     </select>
+
+    <!-- 예약 취소 -->
+    <update id="cancelReservation">
+        UPDATE RESERVATION SET STATUS = '예약취소' WHERE RESERVATION_ID = #{id}
+    </update>
 
 </mapper>
