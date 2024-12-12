@@ -102,9 +102,23 @@
             R.RESERVATION_ID = #{id};
     </select>
 
+    <!-- 여권 정보 업데이트 -->
+    <update id="editPassport">
+        UPDATE RESERVATION
+        SET
+            PASSPORT_NUMBER = #{passportNumber},
+            PASSPORT_EXPIRYDATE = #{passportExpiryDate},
+            PASSPORT_ISSUINGCOUNTRY = #{passportIssuingCountry}
+        WHERE
+            RESERVATION_ID = #{id}
+          AND PASSENGER_NAME = #{passengerName}
+          AND PHONE_NUMBER = #{phoneNumber}
+    </update>
+
     <!-- 예약 취소 -->
     <update id="cancelReservation">
         UPDATE RESERVATION SET STATUS = '예약취소' WHERE RESERVATION_ID = #{id}
     </update>
+
 
 </mapper>

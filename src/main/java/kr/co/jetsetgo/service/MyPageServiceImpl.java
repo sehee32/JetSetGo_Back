@@ -137,6 +137,31 @@ public class MyPageServiceImpl implements MyPageService{
         return results;
     }
 
+    //여권 정보 업데이트
+    public boolean updatePassport(Map<String, String> passportMap) {
+        String id = passportMap.get("id");
+        String passengerName = passportMap.get("passengerName");
+        String phoneNumber = passportMap.get("phoneNumber");
+        String passportNumber = passportMap.get("passportNumber");
+        String passportExpiryDate = passportMap.get("passportExpiryDate");
+        String passportIssuingCountry = passportMap.get("passportIssuingCountry");
+        System.out.println(id);
+        System.out.println(passengerName);
+        System.out.println(phoneNumber);
+        System.out.println(passportNumber);
+        System.out.println(passportExpiryDate);
+        System.out.println(passportIssuingCountry);
+        boolean isUpdated = myPageMapper.editPassport(id, passengerName, phoneNumber, passportNumber, passportExpiryDate, passportIssuingCountry);
+
+        if (isUpdated) {
+            System.out.println("Update successful");
+        } else {
+            System.out.println("Update failed");
+        }
+
+        return isUpdated;
+    }
+
     //예약 취소
     public boolean updateReservationStatus(Map<String, String> reservationMap) {
         String id = reservationMap.get("id");

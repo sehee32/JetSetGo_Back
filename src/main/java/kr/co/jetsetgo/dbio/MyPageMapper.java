@@ -16,5 +16,6 @@ public interface MyPageMapper {
     void removeUser(String id); // 사용자 삭제
     List<ReservationDto> findReservationByUserId(String userId); //예약 검색
     List<ReservationDetailDto> findReservationByReservationId(String id); //예약 상세 검색
+    boolean editPassport(String id, String passengerName, String phoneNumber, String passportNumber, String passportExpiryDate, String passportIssuingCountry); // 여권 정보 업데이트
     boolean cancelReservation(String id); // 예약 취소
 }
