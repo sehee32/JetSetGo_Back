@@ -8,6 +8,7 @@ public class ReservationDetailDto {
 
     private long reservation_Id;
     private long member_Id;
+    private long flight_Id;
     private String name;
     private String phoneNumber;
     private String passenger_Name;
@@ -18,6 +19,8 @@ public class ReservationDetailDto {
     private String passport_Number;
     private String passport_ExpiryDate;
     private String passport_IssuingCountry;
+    private double payment_Amount; // 결제 금액
+    private String payment_Method; // 결제 수단
     private String flight_Num;
     private java.time.LocalDateTime departure_Time;
     private java.time.LocalDateTime arrival_Time;
@@ -50,6 +53,14 @@ public class ReservationDetailDto {
 
     public void setMember_Id(long member_Id) {
         this.member_Id = member_Id;
+    }
+
+    public long getFlight_Id() {
+        return flight_Id;
+    }
+
+    public void setFlight_Id(long flight_Id) {
+        this.flight_Id = flight_Id;
     }
 
     public String getName() {
@@ -130,6 +141,22 @@ public class ReservationDetailDto {
 
     public void setPassport_IssuingCountry(String passport_IssuingCountry) {
         this.passport_IssuingCountry = passport_IssuingCountry;
+    }
+
+    public double getPayment_Amount() {
+        return payment_Amount;
+    }
+
+    public void setPayment_Amount(double paymentAmount) {
+        this.payment_Amount = paymentAmount;
+    }
+
+    public String getPayment_Method() {
+        return payment_Method;
+    }
+
+    public void setPayment_Method(String paymentMethod) {
+        this.payment_Method = paymentMethod;
     }
 
     public String getFlight_Num() {

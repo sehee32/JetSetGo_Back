@@ -126,11 +126,15 @@ public class MyPageServiceImpl implements MyPageService{
             }
 
             //확인용
+            System.out.println("항공편 아이디 " + reservation.getFlight_Id());
             System.out.println("출발 도시 " + reservation.getDeparture_City());
             System.out.println("상태 " + reservation.getStatus());
             System.out.println("여권 번호 " + reservation.getPassport_Number());
             System.out.println("여권 만료일 " + reservation.getPassport_ExpiryDate());
             System.out.println("여권 발행국 " + reservation.getPassport_IssuingCountry());
+            System.out.println("결제 금액 " + reservation.getPayment_Amount());
+            System.out.println("결제 수단 " + reservation.getPayment_Method());
+
 
         }
 

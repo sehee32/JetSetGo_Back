@@ -71,6 +71,7 @@
         SELECT
             R.RESERVATION_ID,
             R.MEMBER_ID,
+            R.FLIGHT_ID,
             M.NAME,
             M.PHONENUMBER,
             R.PASSENGER_NAME,
@@ -81,6 +82,8 @@
             R.PASSPORT_NUMBER,
             R.PASSPORT_EXPIRYDATE,
             R.PASSPORT_ISSUINGCOUNTRY,
+            R.PAYMENT_AMOUNT,
+            R.PAYMENT_METHOD,
             F.FLIGHT_NUM,
             F.DEPARTURE_TIME,
             F.ARRIVAL_TIME,
