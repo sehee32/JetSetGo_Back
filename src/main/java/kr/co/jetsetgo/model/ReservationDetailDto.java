@@ -21,6 +21,10 @@ public class ReservationDetailDto {
     private String passport_IssuingCountry;
     private double payment_Amount; // 결제 금액
     private String payment_Method; // 결제 수단
+    private long nonstop; // 직항여부
+    private String travelclass; // 좌석등급
+    private long adults; // 성인
+    private long children; // 아동
     private String flight_Num;
     private java.time.LocalDateTime departure_Time;
     private java.time.LocalDateTime arrival_Time;
@@ -158,6 +162,39 @@ public class ReservationDetailDto {
     public void setPayment_Method(String paymentMethod) {
         this.payment_Method = paymentMethod;
     }
+
+    public long getNonstop() {
+        return nonstop;
+    }
+
+    public void setNonstop(long nonstop) {
+        this.nonstop = nonstop;
+    }
+
+    public String getTravelclass() {
+        return travelclass;
+    }
+
+    public void setTravelclass(String travelclass) {
+        this.travelclass = travelclass;
+    }
+
+    public long getAdults() {
+        return adults;
+    }
+
+    public void setAdults(long adults) {
+        this.adults = adults;
+    }
+
+    public long getChildren() {
+        return children;
+    }
+
+    public void setChildren(long children) {
+        this.children = children;
+    }
+
 
     public String getFlight_Num() {
         return flight_Num;

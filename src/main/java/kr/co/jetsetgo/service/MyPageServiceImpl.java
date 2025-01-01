@@ -134,7 +134,10 @@ public class MyPageServiceImpl implements MyPageService{
             System.out.println("여권 발행국 " + reservation.getPassport_IssuingCountry());
             System.out.println("결제 금액 " + reservation.getPayment_Amount());
             System.out.println("결제 수단 " + reservation.getPayment_Method());
-
+            System.out.println("직항여부 " + reservation.getNonstop());
+            System.out.println("좌석등급 " + reservation.getTravelclass());
+            System.out.println("성인 " + reservation.getAdults());
+            System.out.println("아동 " + reservation.getChildren());
 
         }
 

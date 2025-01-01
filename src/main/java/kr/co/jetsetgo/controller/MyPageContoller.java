@@ -74,6 +74,14 @@ public class MyPageContoller {
         return result;
     }
 
+    //예약 취소 상세 검색
+    @PostMapping(value = "/myPageReservationChangeDetails", produces = "application/json; charset=utf-8")
+    public List<ReservationDetailDto> myPageReservationChangeDetails(@RequestBody(required = false) Map<String, String> ReservationMap){
+        List<ReservationDetailDto> result = myPageService.selectReservationDetails(ReservationMap);
+        System.out.println(result);
+        return result;
+    }
+
     //여권 정보 업데이트
     @PostMapping(value = "/myPageEditPassport", produces = "application/json; charset=utf-8")
     public boolean myPageEditPassport(@RequestBody(required = false) Map<String, String> passportMap){
