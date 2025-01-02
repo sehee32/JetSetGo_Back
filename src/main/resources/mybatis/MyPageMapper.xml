@@ -109,6 +109,50 @@
             R.RESERVATION_ID = #{id};
     </select>
 
+    <!-- 예약 취소 상세 검색 -->
+    <select id="findReservationByReservationIdAndFlightId" resultType="kr.co.jetsetgo.model.ReservationDetailDto">
+        SELECT
+            R.RESERVATION_ID,
+            R.MEMBER_ID,
+            R.FLIGHT_ID,
+            M.NAME,
+            M.PHONENUMBER,
+            R.PASSENGER_NAME,
+            R.PHONE_NUMBER,
+            R.STATUS,
+            R.TRIP_TYPE,
+            R.RESERVATION_DATE,
+            R.PASSPORT_NUMBER,
+            R.PASSPORT_EXPIRYDATE,
+            R.PASSPORT_ISSUINGCOUNTRY,
+            R.PAYMENT_AMOUNT,
+            R.PAYMENT_METHOD,
+            R.NONSTOP,
+            R.TRAVELCLASS,
+            R.ADULTS,
+            R.CHILDREN,
+            F.FLIGHT_NUM,
+            F.DEPARTURE_TIME,
+            F.ARRIVAL_TIME,
+            F.ORIGINLOCATIONCODE,
+            F.DESTINATIONLOCATIONCODE,
+            F.DEPARTURE_AIRPORT,
+            F.ARRIVAL_AIRPORT,
+            F.DEPARTURE_CITY,
+            F.ARRIVAL_CITY,
+            F.IATACODE,
+            TIMESTAMPDIFF(MINUTE, F.DEPARTURE_TIME, F.ARRIVAL_TIME) AS DURATIONINMINUTES
+        FROM
+            RESERVATION R
+                JOIN
+            MEMBERS M ON R.MEMBER_ID = M.MEMBERNUM
+                JOIN
+            FLIGHTS F ON R.FLIGHT_ID = F.ID
+        WHERE
+            R.RESERVATION_ID = #{id}
+          AND R.FLIGHT_ID = #{flightId};
+    </select>
+
     <!-- 여권 정보 업데이트 -->
     <update id="editPassport">
         UPDATE RESERVATION
