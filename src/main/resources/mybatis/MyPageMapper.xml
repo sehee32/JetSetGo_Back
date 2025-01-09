@@ -195,5 +195,16 @@
         VALUES (#{departureTime}, #{arrivalTime}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});
     </insert>
 
+    <!-- 예약 수정 -->
+    <update id="editReservationByReservationIdAndFlightId">
+        UPDATE RESERVATION
+        SET
+            FLIGHT_ID = #{changeFlightId},
+            PAYMENT_AMOUNT = #{price},
+            RESERVATION_DATE = NOW()
+        WHERE
+            RESERVATION_ID = #{reservationId}
+          AND FLIGHT_ID = #{flightId}
+    </update>
 
 </mapper>
