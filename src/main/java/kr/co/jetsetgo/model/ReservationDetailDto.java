@@ -25,16 +25,12 @@ public class ReservationDetailDto {
     private String travelclass; // 좌석등급
     private long adults; // 성인
     private long children; // 아동
-    private String flight_Num;
     private java.time.LocalDateTime departure_Time;
     private java.time.LocalDateTime arrival_Time;
     private String originlocationcode;
     private String destinationlocationcode;
-    private String departure_Airport;
-    private String arrival_Airport;
     private String departure_City;
     private String arrival_City;
-    private String iatacode;
     private int durationInMinutes;
 
     private java.time.LocalDate departureDate;
@@ -196,14 +192,6 @@ public class ReservationDetailDto {
     }
 
 
-    public String getFlight_Num() {
-        return flight_Num;
-    }
-
-    public void setFlight_Num(String flight_Num) {
-        this.flight_Num = flight_Num;
-    }
-
     public LocalDateTime getDeparture_Time() {
         return departure_Time;
     }
@@ -236,22 +224,6 @@ public class ReservationDetailDto {
         this.destinationlocationcode = destinationlocationcode;
     }
 
-    public String getDeparture_Airport() {
-        return departure_Airport;
-    }
-
-    public void setDeparture_Airport(String departure_Airport) {
-        this.departure_Airport = departure_Airport;
-    }
-
-    public String getArrival_Airport() {
-        return arrival_Airport;
-    }
-
-    public void setArrival_Airport(String arrival_Airport) {
-        this.arrival_Airport = arrival_Airport;
-    }
-
     public String getDeparture_City() {
         return departure_City;
     }
@@ -266,14 +238,6 @@ public class ReservationDetailDto {
 
     public void setArrival_City(String arrival_City) {
         this.arrival_City = arrival_City;
-    }
-
-    public String getIatacode() {
-        return iatacode;
-    }
-
-    public void setIatacode(String iatacode) {
-        this.iatacode = iatacode;
     }
 
     public int getDurationInMinutes() {

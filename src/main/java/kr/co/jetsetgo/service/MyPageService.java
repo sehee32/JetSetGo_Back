@@ -14,7 +14,8 @@ public interface MyPageService {
     public boolean deleteUser(Map<String, String> userInfoMap); //사용자 탈퇴
     public List<ReservationDto> selectReservations(Map<String, String> ReservationMap); //예약 리스트 검색
     public List<ReservationDetailDto> selectReservationDetails(Map<String, String> ReservationMap); //예약 상세 검색
-    public List<ReservationDetailDto> selecteReservationChangeDetails(Map<String, Object> ReservationMap); //예약 취소 상세 검색
+    public List<ReservationDetailDto> selecteReservationChangeDetails(Map<String, Object> ReservationMap); //예약 변경 상세 검색
+    public boolean selecteReservationChangeDetailsData(List<Map<String, Object>> changeFlights); //예약 변경 요청
     public boolean updatePassport(Map<String, String> passportMap); //여권 정보 업데이트
     public boolean updateReservationStatus(Map<String, String> reservationMap); //예약 취소
 }

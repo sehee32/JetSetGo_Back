@@ -88,16 +88,12 @@
             R.TRAVELCLASS,
             R.ADULTS,
             R.CHILDREN,
-            F.FLIGHT_NUM,
             F.DEPARTURE_TIME,
             F.ARRIVAL_TIME,
             F.ORIGINLOCATIONCODE,
             F.DESTINATIONLOCATIONCODE,
-            F.DEPARTURE_AIRPORT,
-            F.ARRIVAL_AIRPORT,
             F.DEPARTURE_CITY,
             F.ARRIVAL_CITY,
-            F.IATACODE,
             TIMESTAMPDIFF(MINUTE, F.DEPARTURE_TIME, F.ARRIVAL_TIME) AS DURATIONINMINUTES
         FROM
             RESERVATION R
@@ -131,16 +127,12 @@
             R.TRAVELCLASS,
             R.ADULTS,
             R.CHILDREN,
-            F.FLIGHT_NUM,
             F.DEPARTURE_TIME,
             F.ARRIVAL_TIME,
             F.ORIGINLOCATIONCODE,
             F.DESTINATIONLOCATIONCODE,
-            F.DEPARTURE_AIRPORT,
-            F.ARRIVAL_AIRPORT,
             F.DEPARTURE_CITY,
             F.ARRIVAL_CITY,
-            F.IATACODE,
             TIMESTAMPDIFF(MINUTE, F.DEPARTURE_TIME, F.ARRIVAL_TIME) AS DURATIONINMINUTES
         FROM
             RESERVATION R
@@ -170,6 +162,38 @@
     <update id="cancelReservation">
         UPDATE RESERVATION SET STATUS = '예약취소' WHERE RESERVATION_ID = #{id}
     </update>
+
+    <!-- 항공편 도시명 가져오기(임시)  -->
+    <select id="findFlightCityById" resultType="map">
+        SELECT
+            DEPARTURE_CITY,
+            ARRIVAL_CITY
+        FROM
+            FLIGHTS
+        WHERE
+            ID = #{id}
+    </select>
+
+    <!-- 기존 DB에 항공편 유무 확인하기  -->
+    <select id="findFlightId" resultType="string">
+        SELECT
+            ID
+        FROM
+            FLIGHTS
+        WHERE
+            DEPARTURE_TIME = #{departureTime}
+          AND ARRIVAL_TIME = #{arrivalTime}
+          AND ORIGINLOCATIONCODE = #{departure}
+          AND DESTINATIONLOCATIONCODE = #{destination}
+          AND DEPARTURE_CITY = #{departureCity}
+          AND ARRIVAL_CITY = #{arrivalCity}
+    </select>
+
+    <!-- 항공편 추가하기  -->
+    <insert id="addFlight">
+        INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
+        VALUES (#{departureTime}, #{arrivalTime}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});
+    </insert>
 
 
 </mapper>
