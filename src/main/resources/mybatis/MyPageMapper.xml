@@ -62,7 +62,7 @@
                   AND f3.DEPARTURE_TIME = f.DEPARTURE_TIME
             )
         ORDER BY
-            r.RESERVATION_DATE DESC;
+            f.DEPARTURE_TIME DESC;
     </select>
 
 
