@@ -174,26 +174,31 @@
             ID = #{id}
     </select>
 
-    <!-- 기존 DB에 항공편 유무 확인하기  -->
-    <select id="findFlightId" resultType="string">
-        SELECT
-            ID
-        FROM
-            FLIGHTS
-        WHERE
-            DEPARTURE_TIME = #{departureTime}
-          AND ARRIVAL_TIME = #{arrivalTime}
-          AND ORIGINLOCATIONCODE = #{departure}
-          AND DESTINATIONLOCATIONCODE = #{destination}
-          AND DEPARTURE_CITY = #{departureCity}
-          AND ARRIVAL_CITY = #{arrivalCity}
-    </select>
 
-    <!-- 항공편 추가하기  -->
-    <insert id="addFlight">
-        INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
-        VALUES (#{departureTime}, #{arrivalTime}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});
+    <!-- 기존 DB에 항공편 유무 확인 후 없을 경우 추가 -->
+    <insert id="checkAndAddFlight" parameterType="map">
+        <selectKey resultType="int" keyProperty="param1">
+            SELECT ID
+            FROM FLIGHTS
+            WHERE DEPARTURE_TIME = #{departureTime,jdbcType=TIMESTAMP}
+            AND ARRIVAL_TIME = #{arrivalTime,jdbcType=TIMESTAMP}
+            AND ORIGINLOCATIONCODE = #{departure}
+            AND DESTINATIONLOCATIONCODE = #{destination}
+            AND DEPARTURE_CITY = #{departureCity}
+            AND ARRIVAL_CITY = #{arrivalCity}
+        </selectKey>
+        <if test="param1 == null">
+            INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
+            VALUES (#{departureTime,jdbcType=TIMESTAMP}, #{arrivalTime,jdbcType=TIMESTAMP}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});
+        </if>
+        <if test="param1 != null">
+            #{param1}
+        </if>
     </insert>
+
+
+
+
 
     <!-- 예약 수정 -->
     <update id="editReservationByReservationIdAndFlightId">

@@ -248,25 +248,18 @@ public class MyPageServiceImpl implements MyPageService{
             //항공편 도시명 가져오기(임시)
             Map<String, String> currentFlight = myPageMapper.findFlightCityById(flightId);
 
-            //기존 DB에 항공편 유무 확인하기
-//            myPageMapper.findFlightId(currentFlight.get(""))
-            String id = myPageMapper.findFlightId(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
 
-            if(id != null){
-                System.out.println("동일한 값이 있어요: " + id);
-                // 항공편 ID와 결제 금액, 예약 시간 변경하기
-                boolean result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, id, changeDetail.get("price"));
-                System.out.println("수정 결과: " + result);
-            }else {
-                // 항공편 추가하기
+            String id = myPageMapper.checkAndAddFlight(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
 
-                myPageMapper.addFlight(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
-                String id2 = myPageMapper.findFlightId(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
-                System.out.println("항공편 추가: " + id2); // 확인용
-                // 항공편 ID와 결제 금액, 예약 시간 변경하기
-                boolean result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, id2, changeDetail.get("price"));
-                System.out.println("수정 결과: " + result);
-            }
+//             = String.valueOf(flights.getId());
+
+            System.out.println("지금 아이디: " + id);
+
+            myPageMapper.checkAndAddFlight(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
+
+            boolean result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, id, changeDetail.get("price"));
+
+            System.out.println("수정 결과: " + result);
             System.out.println("Reservation ID: " + reservationId); // 확인용
             System.out.println("Flight ID: " + flightId); // 확인용
             System.out.println("Details: " + changeDetail); // 확인용
