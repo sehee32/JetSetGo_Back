@@ -267,6 +267,8 @@ public class MyPageServiceImpl implements MyPageService{
 
 //            System.out.println("값 확인 :" + changeDetail.get("departureTime"));
             //            String id = "10";
+
+
             TbFlights flights = new TbFlights();
             flights.setDepartureTime(Timestamp.valueOf(changeDetail.get("departureTime")+":00"));
             flights.setArrivalTime(Timestamp.valueOf(changeDetail.get("arrivalTime")+":00"));
@@ -275,9 +277,9 @@ public class MyPageServiceImpl implements MyPageService{
             flights.setDepartureCity(currentFlight.get("DEPARTURE_CITY"));
             flights.setArrivalCity(currentFlight.get("ARRIVAL_CITY"));
             long resultId = myPageMapper.checkAndAddFlight(flights);
-//            String id = myPageMapper.checkAndAddFlight(Timestamp.valueOf(changeDetail.get("departureTime")+":00"),  Timestamp.valueOf(changeDetail.get("arrivalTime")+":00"), changeDetail.get("departure"), changeDetail.get("destination"), currentFlight.get("DEPARTURE_CITY"), currentFlight.get("ARRIVAL_CITY"));
-            System.out.println("지금 아이디: " + flights.getId());
-            System.out.println("지금 아이디: " + resultId);
+
+            System.out.println("새로운 아이디: " + flights.getId());
+            System.out.println("추가 여부: " + resultId);
 
             boolean result = false;
 
@@ -288,7 +290,6 @@ public class MyPageServiceImpl implements MyPageService{
                 result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, flightChangeId, changeDetail.get("price"));
                 System.out.println("이미 있음: " + flightChangeId); // 확인용
             }
-
 
             System.out.println("결과: " + result); // 확인용
 

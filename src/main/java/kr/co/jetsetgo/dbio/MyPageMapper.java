@@ -23,8 +23,8 @@ public interface MyPageMapper {
     boolean cancelReservation(String id); // 예약 취소
     Map<String, String> findFlightCityById(Integer id); //항공편 도시명 가져오기(임시)
     long findFlightId(TbFlights flights); //기존 DB에 항공편 ID 검색
-//    void addFlight(String departureTime, String arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
-//    String checkAndAddFlight(Timestamp departureTime, Timestamp arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
     long checkAndAddFlight(TbFlights flights); //항공편 추가하기
+    //    void addFlight(String departureTime, String arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
+//    String checkAndAddFlight(Timestamp departureTime, Timestamp arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
     boolean editReservationByReservationIdAndFlightId(String reservationId, Integer flightId, long changeFlightId, String price); //예약 수정
 }
