@@ -174,20 +174,20 @@
             ID = #{id}
     </select>
 
-<!--    &lt;!&ndash;기존 DB에 항공편 유무 확인하기 &ndash;&gt;-->
-<!--    <select id="findFlightId" resultType="string">-->
-<!--        SELECT-->
-<!--            ID-->
-<!--        FROM-->
-<!--            FLIGHTS-->
-<!--        WHERE-->
-<!--            DEPARTURE_TIME = #{departureTime}-->
-<!--          AND ARRIVAL_TIME = #{arrivalTime}-->
-<!--          AND ORIGINLOCATIONCODE = #{departure}-->
-<!--          AND DESTINATIONLOCATIONCODE = #{destination}-->
-<!--          AND DEPARTURE_CITY = #{departureCity}-->
-<!--          AND ARRIVAL_CITY = #{arrivalCity}-->
-<!--    </select>-->
+    <!--기존 DB에 항공편 ID 검색 -->
+    <select id="findFlightId" resultType="long" parameterType="kr.co.jetsetgo.model.TbFlights">
+        SELECT
+            ID
+        FROM
+            FLIGHTS
+        WHERE
+            DEPARTURE_TIME = #{departureTime}
+          AND ARRIVAL_TIME = #{arrivalTime}
+          AND ORIGINLOCATIONCODE = #{originlocationcode}
+          AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
+          AND DEPARTURE_CITY = #{departureCity}
+          AND ARRIVAL_CITY = #{arrivalCity}
+    </select>
 
 <!--    &lt;!&ndash;항공편 추가하기&ndash;&gt;-->
 <!--    <insert id="addFlight">-->
@@ -195,28 +195,33 @@
 <!--        VALUES (#{departureTime}, #{arrivalTime}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});-->
 <!--    </insert>-->
 
+<!--    &lt;!&ndash; 기존 DB에 항공편 유무 확인 후 없을 경우 추가 &ndash;&gt;-->
+<!--    <insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights">-->
+<!--            INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY) VALUES (#{departureTime}, #{arrivalTime}, #{originlocationcode}, #{destinationlocationcode}, #{departureCity}, #{arrivalCity});-->
+<!--        <selectKey resultType="long" keyProperty="id" order="AFTER">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+<!--    </insert>-->
 
     <!-- 기존 DB에 항공편 유무 확인 후 없을 경우 추가 -->
-    <insert id="checkAndAddFlight" parameterType="map">
-        <selectKey resultType="int" keyProperty="param1">
+    <insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights">
+        INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
+        SELECT #{departureTime}, #{arrivalTime}, #{originlocationcode}, #{destinationlocationcode}, #{departureCity}, #{arrivalCity}
+        FROM dual
+        WHERE NOT EXISTS (
             SELECT ID
             FROM FLIGHTS
-            WHERE DEPARTURE_TIME = #{departureTime,jdbcType=TIMESTAMP}
-            AND ARRIVAL_TIME = #{arrivalTime,jdbcType=TIMESTAMP}
-            AND ORIGINLOCATIONCODE = #{departure}
-            AND DESTINATIONLOCATIONCODE = #{destination}
-            AND DEPARTURE_CITY = #{departureCity}
-            AND ARRIVAL_CITY = #{arrivalCity}
+            WHERE DEPARTURE_TIME = #{departureTime}
+              AND ARRIVAL_TIME = #{arrivalTime}
+              AND ORIGINLOCATIONCODE = #{originlocationcode}
+              AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
+              AND DEPARTURE_CITY = #{departureCity}
+              AND ARRIVAL_CITY = #{arrivalCity}
+        )
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+                    SELECT LAST_INSERT_ID()
         </selectKey>
-        <if test="param1 == null">
-            INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
-            VALUES (#{departureTime,jdbcType=TIMESTAMP}, #{arrivalTime,jdbcType=TIMESTAMP}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});
-        </if>
-        <if test="param1 != null">
-            #{param1}
-        </if>
     </insert>
-
 
 
 

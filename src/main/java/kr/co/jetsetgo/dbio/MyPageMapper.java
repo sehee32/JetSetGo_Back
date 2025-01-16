@@ -2,6 +2,7 @@ package kr.co.jetsetgo.dbio;
 
 import kr.co.jetsetgo.model.ReservationDetailDto;
 import kr.co.jetsetgo.model.ReservationDto;
+import kr.co.jetsetgo.model.TbFlights;
 import kr.co.jetsetgo.model.TbMembersDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,8 +22,9 @@ public interface MyPageMapper {
     boolean editPassport(String id, String passengerName, String phoneNumber, String passportNumber, String passportExpiryDate, String passportIssuingCountry); // 여권 정보 업데이트
     boolean cancelReservation(String id); // 예약 취소
     Map<String, String> findFlightCityById(Integer id); //항공편 도시명 가져오기(임시)
-//    String findFlightId(String departureTime, String arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //기존 DB에 항공편 유무 확인하기
+    long findFlightId(TbFlights flights); //기존 DB에 항공편 ID 검색
 //    void addFlight(String departureTime, String arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
-    String checkAndAddFlight(String departureTime, String arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
-    boolean editReservationByReservationIdAndFlightId(String reservationId, Integer flightId, String changeFlightId, String price); //예약 수정
+//    String checkAndAddFlight(Timestamp departureTime, Timestamp arrivalTime, String departure, String destination, String departureCity, String arrivalCity); //항공편 추가하기
+    long checkAndAddFlight(TbFlights flights); //항공편 추가하기
+    boolean editReservationByReservationIdAndFlightId(String reservationId, Integer flightId, long changeFlightId, String price); //예약 수정
 }
