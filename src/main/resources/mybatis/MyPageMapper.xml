@@ -209,20 +209,6 @@
         </selectKey>
     </insert>
 
-    <!--    &lt;!&ndash;항공편 추가하기&ndash;&gt;-->
-    <!--    <insert id="addFlight">-->
-    <!--        INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)-->
-    <!--        VALUES (#{departureTime}, #{arrivalTime}, #{departure}, #{destination}, #{departureCity}, #{arrivalCity});-->
-    <!--    </insert>-->
-
-    <!--    &lt;!&ndash; 기존 DB에 항공편 유무 확인 후 없을 경우 추가 &ndash;&gt;-->
-    <!--    <insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights">-->
-    <!--            INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY) VALUES (#{departureTime}, #{arrivalTime}, #{originlocationcode}, #{destinationlocationcode}, #{departureCity}, #{arrivalCity});-->
-    <!--        <selectKey resultType="long" keyProperty="id" order="AFTER">-->
-    <!--            SELECT LAST_INSERT_ID()-->
-    <!--        </selectKey>-->
-    <!--    </insert>-->
-
 
 
     <!-- 예약 수정 -->

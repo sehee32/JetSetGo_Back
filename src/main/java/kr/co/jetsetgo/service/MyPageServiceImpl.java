@@ -250,25 +250,6 @@ public class MyPageServiceImpl implements MyPageService{
             //항공편 도시명 가져오기(임시)
             Map<String, String> currentFlight = myPageMapper.findFlightCityById(flightId);
 
-//            //기존 DB에 항공편 유무 확인하기
-////            myPageMapper.findFlightId(currentFlight.get(""))
-//            String id = myPageMapper.findFlightId(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), "서울", "도쿄");
-//
-//            if(id != null){
-//                System.out.println("동일한 값이 있어요 " + id);
-//                // 항공편 ID와 결제 금액, 예약 시간 변경하기
-//            }else {
-//                // 항공편 추가하기
-//                myPageMapper.addFlight(changeDetail.get("departureTime"), changeDetail.get("arrivalTime"), changeDetail.get("departure"), changeDetail.get("destination"), "서울", "도쿄");
-//                System.out.println("항공편 추가하기"); // 확인용
-//                // 항공편 ID와 결제 금액, 예약 시간 변경하기
-//            }
-
-
-//            System.out.println("값 확인 :" + changeDetail.get("departureTime"));
-            //            String id = "10";
-
-
             TbFlights flights = new TbFlights();
             flights.setDepartureTime(Timestamp.valueOf(changeDetail.get("departureTime")+":00"));
             flights.setArrivalTime(Timestamp.valueOf(changeDetail.get("arrivalTime")+":00"));
