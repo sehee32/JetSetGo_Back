@@ -15,8 +15,11 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    /*
+    *   예약 내역 저장
+    * */
     @PostMapping
-    public ResponseEntity<String> createReservation(@RequestBody TbReservation reservation) {
+    public ResponseEntity<String> createReservation(@RequestBody TbReservation reservation) throws Exception {
         reservationService.insertReservation(reservation);
         return ResponseEntity.ok("Reservation created successfully");
     }
