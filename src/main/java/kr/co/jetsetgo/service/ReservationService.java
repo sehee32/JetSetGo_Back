@@ -24,8 +24,39 @@ public class ReservationService {
         // 포트원 결제 금액 사전 등록 API 호출
         CommonServiceImpl.createOrderParam(data);
 
-        reservationMapper.insertReservation(reservation);
+
+
+
+
+        // 희가 작업할 곳 ^^.
+
+        /*
+         *  1. 데이터 가져온거 확인
+         *
+         *  2. for문
+         *   2-1. Flights 테이블 데이터 insert
+         */
+//        TbFlights flights = new TbFlights();
+//        flights.setDepartureTime(Timestamp.valueOf(changeDetail.get("departureTime")+":00"));
+//        flights.setArrivalTime(Timestamp.valueOf(changeDetail.get("arrivalTime")+":00"));
+//        flights.setOriginlocationcode(changeDetail.get("departure"));
+//        flights.setDestinationlocationcode(changeDetail.get("destination"));
+//        flights.setDepartureCity(currentFlight.get("DEPARTURE_CITY"));
+//        flights.setArrivalCity(currentFlight.get("ARRIVAL_CITY"));
+//        long resultId = myPageMapper.checkAndAddFlight(flights);
+
+
+        /*
+         *  3. RESERVATION 테이블 데이터 insert
+         *
+         * */
+
+//        TbReservation reservation = new TbReservation();
+//        reservation.setFlight_Id(resultId);
+//        reservationMapper.insertReservation(reservation);
+
 
 
     }
+
 }
