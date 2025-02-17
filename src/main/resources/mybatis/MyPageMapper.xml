@@ -223,4 +223,17 @@
           AND FLIGHT_ID = #{flightId}
     </update>
 
+    <insert id="insertReservation" parameterType="kr.co.jetsetgo.model.TbReservation">
+        <!-- 예약 데이터 삽입 -->
+        INSERT INTO RESERVATION
+        (MEMBER_ID, RESERVATION_ID, FLIGHT_ID, STATUS, TRIP_TYPE, RESERVATION_DATE,
+        PASSENGER_NAME, PHONE_NUMBER, PASSPORT_NUMBER, PASSPORT_EXPIRYDATE,
+        PASSPORT_ISSUINGCOUNTRY, PAYMENT_AMOUNT, PAYMENT_METHOD, NONSTOP,
+        TRAVELCLASS, ADULTS, CHILDREN)
+        VALUES
+        (#{member_Id}, #{reservation_Id}, #{flight_Id}, #{status}, #{trip_Type}, #{reservation_Date},
+        #{passenger_Name}, #{phone_Number}, #{passport_Number}, #{passport_Expirydate},
+        #{passport_Issuingcountry}, #{payment_Amount}, #{payment_Method}, #{nonstop},
+        #{travelclass}, #{adults}, #{children})
+    </insert>
 </mapper>

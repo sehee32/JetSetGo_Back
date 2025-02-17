@@ -1,9 +1,6 @@
 package kr.co.jetsetgo.dbio;
 
-import kr.co.jetsetgo.model.ReservationDetailDto;
-import kr.co.jetsetgo.model.ReservationDto;
-import kr.co.jetsetgo.model.TbFlights;
-import kr.co.jetsetgo.model.TbMembersDto;
+import kr.co.jetsetgo.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +22,5 @@ public interface MyPageMapper {
     long findFlightId(TbFlights flights); //기존 DB에 항공편 ID 검색
     long checkAndAddFlight(TbFlights flights); //기존 DB에 항공편 유무 확인 후 없을 경우 추가
     boolean editReservationByReservationIdAndFlightId(String reservationId, Integer flightId, long changeFlightId, String price); //예약 수정
+    void insertReservation(TbReservation reservation);
 }
