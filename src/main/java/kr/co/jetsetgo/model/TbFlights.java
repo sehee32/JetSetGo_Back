@@ -1,15 +1,11 @@
 package kr.co.jetsetgo.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class TbFlights {
 
   private long id;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
   private java.sql.Timestamp departureTime;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
   private java.sql.Timestamp arrivalTime;
   private String originlocationcode;
   private String destinationlocationcode;

@@ -205,7 +205,14 @@
               AND ARRIVAL_CITY = #{arrivalCity}
         )
         <selectKey resultType="long" keyProperty="id" order="AFTER">
-                    SELECT LAST_INSERT_ID()
+            SELECT COALESCE(LAST_INSERT_ID(),
+            (SELECT ID FROM FLIGHTS WHERE DEPARTURE_TIME = #{departureTime}
+            AND ARRIVAL_TIME = #{arrivalTime}
+            AND ORIGINLOCATIONCODE = #{originlocationcode}
+            AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
+            AND DEPARTURE_CITY = #{departureCity}
+            AND ARRIVAL_CITY = #{arrivalCity}
+            LIMIT 1))
         </selectKey>
     </insert>
 

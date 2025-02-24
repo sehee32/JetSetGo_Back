@@ -1,5 +1,6 @@
 package kr.co.jetsetgo.controller;
 
+import kr.co.jetsetgo.dbio.MyPageMapper;
 import kr.co.jetsetgo.model.ReservationDetailDto;
 import kr.co.jetsetgo.model.ReservationDto;
 import kr.co.jetsetgo.model.TbMembersDto;
@@ -23,6 +24,9 @@ public class MyPageContoller {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private MyPageMapper myPageMapper;
 
     //로그인된 토큰 ID 값 가져와서 사용자 정보 가져오기
     @PostMapping(value = "/getUserInfos", produces = "application/json; charset=utf-8")

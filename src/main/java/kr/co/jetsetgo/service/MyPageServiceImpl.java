@@ -4,8 +4,6 @@ import kr.co.jetsetgo.dbio.MyPageMapper;
 import kr.co.jetsetgo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -281,61 +279,6 @@ public class MyPageServiceImpl implements MyPageService{
         return true;
     }
 
-    @PostMapping(value = "/myPageReservationChangeDetailsData", produces = "application/json; charset=utf-8")
-    public boolean myPageReservationChangeDetailsData(@RequestBody(required = false) List<Map<String, Object>> changeFlights) {
-        boolean result = true;
-
-        for (Map<String, Object> flight : changeFlights) {
-            Map<String, String> changeDetail = (Map<String, String>) flight.get("changeDetail");
-
-            TbFlights outgoingFlight = new TbFlights();
-            outgoingFlight.setDepartureTime(Timestamp.valueOf(changeDetail.get("departureTime") + ":00"));
-            outgoingFlight.setArrivalTime(Timestamp.valueOf(changeDetail.get("arrivalTime") + ":00"));
-            outgoingFlight.setOriginlocationcode(changeDetail.get("departure"));
-            outgoingFlight.setDestinationlocationcode(changeDetail.get("destination"));
-            outgoingFlight.setDepartureCity(changeDetail.get("departureCity"));
-            outgoingFlight.setArrivalCity(changeDetail.get("arrivalCity"));
-
-            long outgoingFlightId = myPageMapper.checkAndAddFlight(outgoingFlight);
-
-            // 왕복 예약일 경우 returnFlight 처리
-            if ("왕복".equals(flight.get("tripType"))) {
-                Map<String, String> returnChangeDetail = (Map<String, String>) flight.get("returnFlight");
-                TbFlights returnFlight = new TbFlights();
-                returnFlight.setDepartureTime(Timestamp.valueOf(returnChangeDetail.get("departureTime") + ":00"));
-                returnFlight.setArrivalTime(Timestamp.valueOf(returnChangeDetail.get("arrivalTime") + ":00"));
-                returnFlight.setOriginlocationcode(returnChangeDetail.get("departure"));
-                returnFlight.setDestinationlocationcode(returnChangeDetail.get("destination"));
-                returnFlight.setDepartureCity(returnChangeDetail.get("departureCity"));
-                returnFlight.setArrivalCity(returnChangeDetail.get("arrivalCity"));
-
-                long returnFlightId = myPageMapper.checkAndAddFlight(returnFlight);
-
-                // 예약 정보에 왕복 항공편을 저장
-                result &= saveReservation((String) flight.get("reservationId"), outgoingFlightId, returnFlightId);
-            } else {
-                // 편도일경우
-                result &= saveReservation((String) flight.get("reservationId"), outgoingFlightId, 0);
-            }
-        }
-
-        return result;
-    }
-
-    private boolean saveReservation(String reservationId, long outgoingFlightId, long returnFlightId) {
-        TbReservation reservation = new TbReservation();
-        reservation.setReservation_Id(Long.parseLong(reservationId));
-        reservation.setFlight_Id(outgoingFlightId); // 첫 번째 항공편
-        myPageMapper.insertReservation(reservation);
-
-        // 왕복 항공편이 있는 경우 두 번째 항공편을 추가
-        if (returnFlightId != 0) {
-            reservation.setFlight_Id(returnFlightId); // 두 번째 항공편
-            myPageMapper.insertReservation(reservation);
-        }
-
-        return true;
-    }
     //예약 취소
     public boolean updateReservationStatus(Map<String, String> reservationMap) {
         String id = reservationMap.get("id");
