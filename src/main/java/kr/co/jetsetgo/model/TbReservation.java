@@ -7,7 +7,7 @@ public class TbReservation {
 
   private long num;
   private long member_Id;
-  private long reservation_Id;
+  private String reservation_Id;
   private long flight_Id;
   private String status;
   private String trip_Type;
@@ -41,11 +41,11 @@ public class TbReservation {
     this.member_Id = member_Id;
   }
 
-  public long getReservation_Id() {
+  public String getReservation_Id() {
     return reservation_Id;
   }
 
-  public void setReservation_Id(long reservation_Id) {
+  public void setReservation_Id(String reservation_Id) {
     this.reservation_Id = reservation_Id;
   }
 
@@ -53,7 +53,7 @@ public class TbReservation {
     return flight_Id;
   }
 
-  public void setFlight_Id(long flight_Id) {
+  public void setFlight_Id(Long flight_Id) {
     this.flight_Id = flight_Id;
   }
 

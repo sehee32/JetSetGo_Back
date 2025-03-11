@@ -190,7 +190,7 @@
     </select>
 
     <!-- 기존 DB에 항공편 유무 확인 후 없을 경우 추가 -->
-    <insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights">
+    <insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
         SELECT #{departureTime}, #{arrivalTime}, #{originlocationcode}, #{destinationlocationcode}, #{departureCity}, #{arrivalCity}
         FROM dual
@@ -203,18 +203,19 @@
               AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
               AND DEPARTURE_CITY = #{departureCity}
               AND ARRIVAL_CITY = #{arrivalCity}
-        )
-        <selectKey resultType="long" keyProperty="id" order="AFTER">
-            SELECT COALESCE(LAST_INSERT_ID(),
-            (SELECT ID FROM FLIGHTS WHERE DEPARTURE_TIME = #{departureTime}
-            AND ARRIVAL_TIME = #{arrivalTime}
-            AND ORIGINLOCATIONCODE = #{originlocationcode}
-            AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
-            AND DEPARTURE_CITY = #{departureCity}
-            AND ARRIVAL_CITY = #{arrivalCity}
-            LIMIT 1))
-        </selectKey>
+        );
     </insert>
+    <select id="getFlightIdIfExists" parameterType="kr.co.jetsetgo.model.TbFlights" resultType="long">
+        SELECT ID
+        FROM FLIGHTS
+        WHERE DEPARTURE_TIME = #{departureTime}
+          AND ARRIVAL_TIME = #{arrivalTime}
+          AND ORIGINLOCATIONCODE = #{originlocationcode}
+          AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
+          AND DEPARTURE_CITY = #{departureCity}
+          AND ARRIVAL_CITY = #{arrivalCity}
+            LIMIT 1;
+    </select>
 
 
 
