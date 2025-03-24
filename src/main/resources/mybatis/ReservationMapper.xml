@@ -25,7 +25,6 @@
         UPDATE  RESERVATION
         SET     STATUS = '예약확정'
         WHERE   RESERVATION_ID = #{reservation_Id}
-        AND     FLIGHT_ID = #{flight_id}
     </update>
 
 </mapper>

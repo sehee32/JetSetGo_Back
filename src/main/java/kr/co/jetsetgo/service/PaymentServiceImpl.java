@@ -13,7 +13,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     // 예약내역 업데이트
     public void updatePayment(Map<String, String> data) {
-        paymentMapper.updateReservationFlghts(data.get("reservation_Id"), data.get("flight_id"));
+        paymentMapper.updateReservationFlghts(data.get("reservation_Id"));
     }
 
 }
