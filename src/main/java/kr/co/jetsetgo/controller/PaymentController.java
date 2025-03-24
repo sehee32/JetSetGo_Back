@@ -19,10 +19,11 @@ public class PaymentController {
     @PostMapping("/payment")
     public boolean signUp(@RequestBody Map<String, String> data) {
         try {
-            paymentService.insertPayment(data);
+            System.out.println("updatePayment data :" + data.get("reservation_Id"));
+            paymentService.updatePayment(data);
         } catch (Exception e)
         {
-            System.out.println("[ERROR] portone 결제 정보 저장 실패 :" + e.getMessage());
+            System.out.println("[ERROR] portone 결제 정보 저장 실패 :" + e.getMessage() + e.toString() + e.getCause());
             return false;
         }
         return true;

@@ -20,6 +20,12 @@
              #{travelclass}, #{adults}, #{children})
     </insert>
 
-
+     <!-- 결제내역 저장 -->
+    <update id="updateReservationFlghts">
+        UPDATE  RESERVATION
+        SET     STATUS = '예약확정'
+        WHERE   RESERVATION_ID = #{reservation_Id}
+        AND     FLIGHT_ID = #{flight_id}
+    </update>
 
 </mapper>
