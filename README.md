@@ -341,7 +341,62 @@ void removeUser(String id);
 </summary>
 
 ```
+// [여권 정보 업데이트] - MyPageServiceImpl.java
+public boolean updatePassport(Map<String, String> passportMap) {
+    String id = passportMap.get("id");
+    String passengerName = passportMap.get("passengerName");
+    String phoneNumber = passportMap.get("phoneNumber");
+    String passportNumber = passportMap.get("passportNumber");
+    String passportExpiryDate = passportMap.get("passportExpiryDate");
+    String passportIssuingCountry = passportMap.get("passportIssuingCountry");
+    return myPageMapper.editPassport(id, passengerName, phoneNumber, passportNumber, passportExpiryDate, passportIssuingCountry);
+}
 
+// [예약 항공편 변경 상세 조회] - MyPageServiceImpl.java
+public List<ReservationDetailDto> selecteReservationChangeDetails(Map<String, Object> ReservationMap) {
+    String id = (String) ReservationMap.get("id");
+    List<Integer> ids = (List<Integer>) ReservationMap.get("selectedFlightChangeId");
+    List<ReservationDetailDto> results = new ArrayList<>();
+    if (ids != null && !ids.isEmpty()) {
+        for (Integer selectedFlightId : ids) {
+            List<ReservationDetailDto> partialResults = myPageMapper.findReservationByReservationIdAndFlightId(id, selectedFlightId);
+            if (partialResults != null) {
+                results.addAll(partialResults);
+            }
+        }
+    }
+    // (날짜/시간 분리 및 기타 정보 가공 로직 생략)
+    return results;
+}
+
+// [예약 항공편 변경 요청] - MyPageServiceImpl.java
+public boolean selecteReservationChangeDetailsData(List<Map<String, Object>> changeFlights) {
+    for (Map<String, Object> flight : changeFlights) {
+        Integer flightId = (Integer) flight.get("flightId");
+        Map<String, String> changeDetail = (Map<String, String>) flight.get("changeDetail");
+        String reservationId = (String) flight.get("reservationId");
+
+        // 항공편 정보 생성 및 DB 처리
+        Map<String, String> currentFlight = myPageMapper.findFlightCityById(flightId);
+        TbFlights flights = new TbFlights();
+        flights.setDepartureTime(Timestamp.valueOf(changeDetail.get("departureTime")+":00"));
+        flights.setArrivalTime(Timestamp.valueOf(changeDetail.get("arrivalTime")+":00"));
+        flights.setOriginlocationcode(changeDetail.get("departure"));
+        flights.setDestinationlocationcode(changeDetail.get("destination"));
+        flights.setDepartureCity(currentFlight.get("DEPARTURE_CITY"));
+        flights.setArrivalCity(currentFlight.get("ARRIVAL_CITY"));
+        long resultId = myPageMapper.checkAndAddFlight(flights);
+
+        boolean result;
+        if (resultId != 0){
+            result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, flights.getId(), changeDetail.get("price"));
+        } else {
+            long flightChangeId = myPageMapper.findFlightId(flights);
+            result = myPageMapper.editReservationByReservationIdAndFlightId(reservationId, flightId, flightChangeId, changeDetail.get("price"));
+        }
+    }
+    return true;
+}
 
 ```
 </details>
@@ -355,10 +410,32 @@ void removeUser(String id);
 </summary>
 
 ```
+// [Service] 예약 취소 기능 - MyPageServiceImpl.java
+public boolean updateReservationStatus(Map<String, String> reservationMap) {
+    String id = reservationMap.get("id");
+    boolean isUpdated = myPageMapper.cancelReservation(id);
+    System.out.println(id);
+    if (isUpdated) {
+        System.out.println("Update successful");
+    } else {
+        System.out.println("Update failed");
+    }
+    return isUpdated;
+}
 
+// [Mapper] 예약 취소 - MyPageMapper.java
+boolean cancelReservation(String id);
+
+<!-- [Mapper XML] 예약 취소 예시 -->
+<update id="cancelReservation">
+    UPDATE RESERVATIONS
+    SET STATUS = '취소'
+    WHERE RESERVATION_ID = #{id}
+</update>
 
 ```
 </details>
+
 
 ---
 
