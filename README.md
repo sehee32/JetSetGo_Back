@@ -1,5 +1,5 @@
 # **JetSetGo Back**
-이 프로젝트는 Vue.js를 사용하여 항공권 검색 및 예약을 지원하는 웹 애플리케이션입니다.​
+이 프로젝트는 Spring Boot를 사용하여 항공권 검색 및 예약을 지원하는 웹 애플리케이션입니다.​
 
 
 ##  🛠기술 스택
@@ -67,10 +67,64 @@ npm run build
 </summary>
 
 ```
+// 회원가입 REST API 컨트롤러 (SignUpController.java)
+@RestController
+@RequestMapping("/api")
+public class SignUpController {
+    @Autowired
+    private SignUpMapper signUpMapper;
 
+    // 회원가입
+    @PostMapping("/signup")
+    public String signUp(@RequestBody TbMembersDto tbMembersDto) {
+        signUpMapper.insertMember(tbMembersDto);
+        return "회원가입 성공";
+    }
+
+    // 아이디(Username) 중복 체크
+    @PostMapping("/checkUsername")
+    public Map<String, Boolean> checkUsername(@RequestBody Map<String, String> usernameMap) {
+        String username = usernameMap.get("username");
+        TbMembersDto existingMember = signUpMapper.findByUsername(username);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", existingMember != null);
+        return response;
+    }
+}
+
+// MyBatis Mapper 인터페이스 (SignUpMapper.java)
+@Mapper
+public interface SignUpMapper {
+    void insertMember(TbMembersDto tbMembersDto);
+    TbMembersDto findByUsername(String username);
+}
+
+// MyBatis Mapper XML (SignUpMapper.xml)
+<mapper namespace="kr.co.jetsetgo.dbio.SignUpMapper">
+    <insert id="insertMember">
+        INSERT INTO MEMBERS (NAME, USERNAME, PASSWORD, BIRTHDATE, PHONENUMBER, AGREETERMS)
+        VALUES (#{name}, #{username}, #{password}, #{birthdate}, #{phoneNumber}, #{agreeTerms})
+    </insert>
+
+    <select id="findByUsername" resultType="kr.co.jetsetgo.model.TbMembersDto">
+        SELECT * FROM MEMBERS WHERE USERNAME = #{username}
+    </select>
+</mapper>
+
+// 회원 테이블 생성 SQL (MEMBERS 테이블)
+CREATE TABLE MEMBERS (
+    MEMBERNUM   INT AUTO_INCREMENT PRIMARY KEY,
+    NAME        VARCHAR(255),
+    USERNAME    VARCHAR(255),
+    PASSWORD    VARCHAR(255),
+    BIRTHDATE   DATE,
+    PHONENUMBER VARCHAR(255),
+    AGREETERMS  TINYINT(1) NOT NULL
+) COMMENT '회원테이블';
 
 ```
 </details>
+
 
 
 ---
@@ -88,10 +142,75 @@ npm run build
 </summary>
 
 ```
+// 로그인 컨트롤러: 인증 및 JWT 토큰 발급 (LoginController.java)
+@RestController
+@RequestMapping("/api")
+public class LoginController {
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody TbMembersDto loginRequest) {
+        TbMembersDto user = loginService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+        if (user == null) {
+            return ResponseEntity.status(401).body("잘못된 정보입니다.");
+        }
+        String token = jwtUtil.generateToken(user.getUsername());
+        return ResponseEntity.ok(new LoginDto(token));
+    }
+}
+
+
+// 로그인 서비스: 사용자 인증 (DB에서 사용자 조회 및 비밀번호 검증) (LoginService.java)
+@Service
+public class LoginService {
+    @Autowired
+    private SignUpMapper signUpMapper;
+
+    public TbMembersDto authenticate(String username, String password) {
+        TbMembersDto user = signUpMapper.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
+}
+
+
+// JWT 토큰 생성 유틸리티 (JWT토큰 생성 및 파싱) (JwtUtil.java)
+@Component
+public class JwtUtil {
+    private static final String SECRET_KEY = "TestSecretKey";
+    private static final long EXPIRATION_TIME = 86400000; // 1일
+
+    public String generateToken(String username) {
+        return JWT.create()
+                .withSubject(username)
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(SECRET_KEY));
+    }
+
+    public String extractUsername(String token) {
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC512(SECRET_KEY)).build();
+        DecodedJWT jwt = verifier.verify(token);
+        return jwt.getSubject();
+    }
+}
+
+
+// 로그인 응답 DTO (토큰 응답용 DTO) (LoginDto.java)
+public class LoginDto {
+    private String token;
+    public LoginDto(String token) { this.token = token; }
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
+}
 
 ```
 </details>
+
 
 
 ---
