@@ -223,7 +223,88 @@ public class LoginDto {
 </summary>
 
 ```
+1. 로그인 중인 사용자 정보 조회
+// [Controller] 사용자 정보 조회
+@PostMapping("/getUserInfos")
+public TbMembersDto getUserInfos(@RequestBody Map<String, String> tokenMap){
+    String token = tokenMap.get("token");
+    String username = jwtUtil.extractUsername(token);
+    return myPageService.selectMembers(username);
+}
 
+// [Service] 사용자 정보 조회
+public TbMembersDto selectMembers(String username) {
+    return myPageMapper.findUserInfoByUserName(username);
+}
+
+// [Mapper]
+TbMembersDto findUserInfoByUserName(String userName);
+
+
+2. 연락처 정보(사용자 정보) 변경
+// [Controller] 연락처 정보 변경
+@PostMapping("/myPageUserInfoEdit")
+public boolean myPageUserInfoEdit(@RequestBody Map<String, String> userInfoMap){
+    return myPageService.updateUserInfo(userInfoMap);
+}
+
+// [Service]
+public boolean updateUserInfo(Map<String, String> userInfoMap) {
+    String id = userInfoMap.get("userId");
+    String contact = userInfoMap.get("contact");
+    return myPageMapper.editUserInfo(id, contact);
+}
+
+// [Mapper]
+boolean editUserInfo(String id, String contact);
+
+
+3. 비밀번호 변경
+// [Controller] 비밀번호 변경
+@PostMapping("/myPageUserPasswordEdit")
+public boolean myPageUserPasswordEdit(@RequestBody Map<String, String> userInfoMap){
+    return myPageService.updateUserPassword(userInfoMap);
+}
+
+// [Service]
+public boolean updateUserPassword(Map<String, String> userInfoMap) {
+    String id = userInfoMap.get("userId");
+    String password = userInfoMap.get("password");
+    return myPageMapper.editUserPassword(id, password);
+}
+
+// [Mapper]
+boolean editUserPassword(String id, String password);
+
+
+
+4. 예약목록 확인
+// [Controller] 예약 목록 조회
+@PostMapping("/myPageReservations")
+public List<ReservationDto> myPageReservations(@RequestBody Map<String, String> ReservationMap){
+    return myPageService.selectReservations(ReservationMap);
+}
+
+// [Service]
+public List<ReservationDto> selectReservations(Map<String, String> ReservationMap) {
+    String userId = ReservationMap.get("userId");
+    List<ReservationDto> results = myPageMapper.findReservationByUserId(userId);
+    // 출발/도착 일시 → 날짜/시간 분리
+    for (ReservationDto reservation : results) {
+        LocalDateTime dep = reservation.getDeparture_Time();
+        LocalDateTime arr = reservation.getArrival_Time();
+        if (dep != null && arr != null) {
+            reservation.setDepartureDate(dep.toLocalDate());
+            reservation.setDepartureTime(dep.toLocalTime());
+            reservation.setArrivalDate(arr.toLocalDate());
+            reservation.setArrivalTime(arr.toLocalTime());
+        }
+    }
+    return results;
+}
+
+// [Mapper]
+List<ReservationDto> findReservationByUserId(String userId);
 
 ```
 </details>
@@ -235,11 +316,35 @@ public class LoginDto {
 </summary>
 
 ```
+// [Controller] 회원 탈퇴
+@PostMapping("/myPageUserRemove")
+public boolean myPageUserRemove(@RequestBody Map<String, String> userInfoMap){
+    return myPageService.deleteUser(userInfoMap);
+}
 
+// [Service] 회원 탈퇴
+public boolean deleteUser(Map<String, String> userInfoMap) {
+    String id = userInfoMap.get("id");
+    myPageMapper.removeUser(id);
+    return true;
+}
+
+// [Mapper] 회원 탈퇴
+void removeUser(String id);
 
 ```
 </details>
 <br><br>
+
+>여권 정보, 예약 항공편 변경![마이페이지3](https://github.com/user-attachments/assets/ec963116-9217-4590-ae30-e3e0f5917d31)
+<details><summary> 주요 코드
+</summary>
+
+```
+
+
+```
+</details>
 
 >예약이 변경됨![마이페이지4](https://github.com/user-attachments/assets/608e08dd-5d70-4b35-b28c-7166470a92ab)
 
