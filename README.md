@@ -141,10 +141,6 @@ npm run build
 ### 문의하기 (SupportPage.vue)
 
 >문의글 작성, 문의 게시판 카테고리 별 분류, 비공개 글 암호 기능![문의1](https://github.com/user-attachments/assets/325b43eb-451f-4307-a074-3cb5ae321efc)
-<details><summary>주요 코드
-</summary>
-
-```
 <details><summary> 주요 코드
 </summary>
 
