@@ -643,10 +643,86 @@ void editSupport(TbSupport support);
 </summary>
 
 ```
+1. 출발지&도착지 자동완성
+// [Controller] 공항 검색 API
+@GetMapping("/airports")
+public Map<String, List<AirportDTO>> searchAirports(@RequestParam String keyword) {
+    List<AirportDTO> airportDTOs = airportService.searchAirportsByName(keyword);
+    return Map.of("airports", airportDTOs);
+}
 
+// [Service] 도시 이름으로 공항 검색
+public List<AirportDTO> searchAirportsByName(String city) {
+    List<Airport> airports = airportMapper.findByCityNameContainingIgnoreCase(city);
+    return airports.stream()
+        .map(a -> new AirportDTO(a.getCode(), a.getCity()))
+        .collect(Collectors.toList());
+}
+
+<!-- [MyBatis] 도시 이름 검색 쿼리 -->
+<select id="findByCityNameContainingIgnoreCase" resultType="Airport">
+    SELECT * FROM IATA_AIRPORT 
+    WHERE LOWER(CITY) LIKE LOWER(CONCAT('%', #{city}, '%'))
+</select>
+
+
+2. 항공편 검색
+// [Controller] 항공편 검색 API
+@GetMapping("/search")
+public String searchFlights(@RequestParam String origin,
+                           @RequestParam String destination,
+                           @RequestParam String departureDate,
+                           @RequestParam int adults,
+                           @RequestParam int children,
+                           @RequestParam String travelClass,
+                           @RequestParam boolean nonStop) throws IOException {
+    return ApiUtil.searchFlights(origin, destination, departureDate, 
+                               adults, children, travelClass, nonStop);
+}
+
+// [API Util] Amadeus API 호출
+public static String searchFlights(...) throws IOException {
+    String token = getToken(); // OAuth 2.0 토큰 발급
+    String url = String.format(
+        "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=%s&...",
+        origin, destination, departureDate, adults, children, travelClass, nonStop
+    );
+    
+    // API 응답 처리
+    JSONArray resultArray = new JSONArray();
+    for (flight in 응답데이터) {
+        resultArray.put({
+            "id": "A12345",
+            "departureTime": "2024-01-01T12:00:00",
+            "arrivalTime": "2024-01-01T15:00:00",
+            "price": "250000"
+        });
+    }
+    return resultArray.toString();
+}
+
+// 검색 파라미터
+origin: 출발지 공항 코드 (ICN)
+destination: 도착지 공항 코드 (NRT)
+departureDate: 출발일 (YYYY-MM-DD)
+adults/children: 승객 수
+travelClass: 좌석 등급 (ECONOMY, BUSINESS)
+nonStop: 직항 여부 (true/false)
 
 ```
 </details>
+
+**자동완성**
+- 사용자가 입력창에 서 입력 → 프론트에서 /api/flights/airports?keyword=서 요청
+- DB에서 CITY 컬럼에 서가 포함된 공항 검색 (예: 서울, 청주, 부산)
+- 결과를 [{code: "ICN", city: "서울"}, ...] 형태로 반환
+- 프론트엔드에서 자동완성 UI에 표시
+
+**항공편 검색**
+- 선택된 공항 코드로 Amadeus API 호출
+- 최대 30개 항공편 정보 반환
+- 가격, 출발/도착 시간, 소요시간 포함
+
 <br><br>
 
 
