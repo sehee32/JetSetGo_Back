@@ -57,7 +57,7 @@ npm run build
 
 ## 🌟 주요 기능
 
-### 회원가입 (SignUp.vue)
+### 회원가입
 
 <img width="100%" src="https://github.com/user-attachments/assets/2e6643dd-889a-4b21-8f3c-a48259e77aea"/>
 
@@ -67,7 +67,7 @@ npm run build
 </summary>
 
 ```
-// 회원가입 REST API 컨트롤러 (SignUpController.java)
+// [Controller] 회원가입 (SignUpController.java)
 @RestController
 @RequestMapping("/api")
 public class SignUpController {
@@ -92,14 +92,14 @@ public class SignUpController {
     }
 }
 
-// MyBatis Mapper 인터페이스 (SignUpMapper.java)
+// [Mapper] (SignUpMapper.java)
 @Mapper
 public interface SignUpMapper {
     void insertMember(TbMembersDto tbMembersDto);
     TbMembersDto findByUsername(String username);
 }
 
-// MyBatis Mapper XML (SignUpMapper.xml)
+<!-- [MyBatis XML] 회원 정보 저장 --> (SignUpMapper.xml)
 <mapper namespace="kr.co.jetsetgo.dbio.SignUpMapper">
     <insert id="insertMember">
         INSERT INTO MEMBERS (NAME, USERNAME, PASSWORD, BIRTHDATE, PHONENUMBER, AGREETERMS)
@@ -125,12 +125,14 @@ CREATE TABLE MEMBERS (
 ```
 </details>
 
-
+- /api/signup에 회원 정보(JSON) 전달
+- DB에 새로운 회원 정보 저장
+- 성공 시 "회원가입 성공" 반환
 
 ---
 
 
-### 로그인 (LoginPage.vue)
+### 로그인
 
 
 <img width="100%" src="https://github.com/user-attachments/assets/8c3171b0-738e-40ac-8dfa-d8a86fc5d3c8"/>
@@ -142,7 +144,7 @@ CREATE TABLE MEMBERS (
 </summary>
 
 ```
-// 로그인 컨트롤러: 인증 및 JWT 토큰 발급 (LoginController.java)
+// [Controller] 로그인 요청 및 JWT 토큰 발급 (LoginController.java)
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -163,7 +165,7 @@ public class LoginController {
 }
 
 
-// 로그인 서비스: 사용자 인증 (DB에서 사용자 조회 및 비밀번호 검증) (LoginService.java)
+// [Service] 사용자 인증 (DB에서 사용자 조회 및 비밀번호 검증) (LoginService.java)
 @Service
 public class LoginService {
     @Autowired
@@ -179,7 +181,7 @@ public class LoginService {
 }
 
 
-// JWT 토큰 생성 유틸리티 (JWT토큰 생성 및 파싱) (JwtUtil.java)
+// [JwtUtil] JWT 토큰 생성 (JWT토큰 생성 및 파싱) (JwtUtil.java)
 @Component
 public class JwtUtil {
     private static final String SECRET_KEY = "TestSecretKey";
@@ -211,12 +213,17 @@ public class LoginDto {
 ```
 </details>
 
+- /api/login에 username, password 전달
+- Service에서 DB 조회, 비밀번호 일치하면 인증 성공
+- 인증 성공 시 JWT 토큰 생성 후 반환
+- 이후 API 호출 시 이 토큰을 Authorization 헤더에 포함
+
 
 
 ---
 
 
-### 마이페이지 (MyPage.vue)
+### 마이페이지
 
 >연락처 정보, 비밀번호 변경, 예약목록 확인![마이페이지1](https://github.com/user-attachments/assets/fbee741d-ca44-44ae-b6f3-df2975876c81)
 <details><summary> 주요 코드
@@ -308,6 +315,10 @@ List<ReservationDto> findReservationByUserId(String userId);
 
 ```
 </details>
+
+- JWT 토큰으로 로그인 사용자를 식별해 개인정보, 예약 내역 등 조회/수정
+- Map<String, String> 형태로 필요한 데이터(아이디, 연락처, 비밀번호 등) 전달
+- MyBatis Mapper를 통해 DB 연동
 <br><br>
 
 
@@ -334,6 +345,11 @@ void removeUser(String id);
 
 ```
 </details>
+
+
+- 컨트롤러에서 deleteUser 서비스 메소드 호출
+- 서비스에서 myPageMapper.removeUser(id)로 DB에서 해당 회원 삭제
+- 성공 시 true 반환
 <br><br>
 
 >여권 정보, 예약 항공편 변경![마이페이지3](https://github.com/user-attachments/assets/ec963116-9217-4590-ae30-e3e0f5917d31)
@@ -401,6 +417,19 @@ public boolean selecteReservationChangeDetailsData(List<Map<String, Object>> cha
 ```
 </details>
 
+**여권 정보 업데이트**
+- updatePassport(Map<String, String> passportMap)
+- 전달받은 여권 관련 정보로 DB 업데이트
+
+**예약 항공편 변경 상세 조회**
+- selecteReservationChangeDetails(Map<String, Object> ReservationMap)
+- 예약ID, 변경할 항공편 ID 리스트로 상세정보 조회
+
+**예약 항공편 변경 요청**
+
+- selecteReservationChangeDetailsData(List<Map<String, Object>> changeFlights)
+- 변경 요청된 항공편 정보를 DB에 반영 (신규 항공편 추가/기존 항공편 변경)
+
 >예약이 변경됨![마이페이지4](https://github.com/user-attachments/assets/608e08dd-5d70-4b35-b28c-7166470a92ab)
 
 <br><br>
@@ -436,20 +465,137 @@ boolean cancelReservation(String id);
 ```
 </details>
 
+- updateReservationStatus(Service): 예약 ID를 받아 예약 상태를 '취소'로 변경
+- cancelReservation(Mapper): DB에서 해당 예약의 상태 업데이트
+- Mapper XML에서 실제 SQL 실행
+
 
 ---
 
-### 문의하기 (SupportPage.vue)
+### 문의하기
 
 >문의글 작성, 문의 게시판 카테고리 별 분류, 비공개 글 암호 기능![문의1](https://github.com/user-attachments/assets/325b43eb-451f-4307-a074-3cb5ae321efc)
+
 <details><summary> 주요 코드
 </summary>
 
 ```
+1. 문의글 작성 (Create)
+// [Controller] 문의글 등록
+@PostMapping("/supportAdd")
+public boolean supportAdd(@RequestBody TbSupport support) {
+    return supportService.insertSupport(support);
+}
 
+// [Service] 작성자 ID 조회 및 문의글 저장
+public boolean insertSupport(TbSupport support) {
+    long writerId = supportMapper.findIdByWriterName(support.getWriter_Name());
+    support.setWriter_Id(writerId);
+    supportMapper.addSupport(support);
+    return true;
+}
+
+// [Mapper] 
+void addSupport(TbSupport support);
+
+<!-- [MyBatis XML] 문의글 추가 -->
+<insert id="addSupport">
+    INSERT INTO SUPPORT (WRITER_ID, WRITER_NAME, TITLE, DETAIL, CREATED_DATE, PUBLIC_STATUS, CATEGORY)
+    VALUES (#{writer_Id}, #{writer_Name}, #{title}, #{detail}, NOW(), #{public_Status}, #{category});
+</insert>
+
+
+2. 문의 게시판 + 카테고리 분류 (Read)
+// [Controller] 문의 목록 조회
+@PostMapping("/supportSearch")
+public List<TbSupport> supportSearch(@RequestBody Map<String, String> SearchMap) {
+    return supportService.selectSupports(SearchMap);
+}
+
+// [Service] 조건별 검색 처리
+public List<TbSupport> selectSupports(Map<String, String> SearchMap) {
+    String search = SearchMap.get("search");
+    String category = SearchMap.get("category");
+    
+    if (search.isEmpty()) {
+        return category.equals("total") 
+            ? supportMapper.findAll() 
+            : supportMapper.findByCategory(category);
+    } else {
+        return supportMapper.findBySearchQuery(search);
+    }
+}
+
+// [Mapper]
+List<TbSupport> findAll();
+List<TbSupport> findByCategory(String category);
+List<TbSupport> findBySearchQuery(String search);
+
+
+<!-- [MyBatis XML] 전체/카테고리/검색어별 조회 -->
+<select id="findAll" resultType="kr.co.jetsetgo.model.TbSupport">
+    SELECT * FROM SUPPORT ORDER BY SUPPORT_ID DESC
+</select>
+<select id="findBycategory" resultType="kr.co.jetsetgo.model.TbSupport">
+    SELECT * FROM SUPPORT WHERE CATEGORY = #{category} ORDER BY SUPPORT_ID DESC
+</select>
+<select id="findBySearchQuery" resultType="kr.co.jetsetgo.model.TbSupport">
+    SELECT * FROM SUPPORT WHERE TITLE LIKE CONCAT('%', #{search}, '%') ORDER BY SUPPORT_ID DESC
+</select>
+
+3. 비공개 글 암호 확인
+// [Controller] 비밀번호 검증
+@PostMapping("/supportCheckPassword")
+public boolean supportCheckPassword(@RequestBody Map<String, String> supportIdMap) {
+    return supportService.selectSupportPassword(supportIdMap);
+}
+
+// [Service] DB 비밀번호 비교
+public boolean selectSupportPassword(Map<String, String> supportIdMap) {
+    String supportId = supportIdMap.get("supportId");
+    String inputPassword = supportIdMap.get("password");
+    
+    TbSupport support = supportMapper.findById(supportId);
+    String dbPassword = supportMapper.findPasswordByWriterId(support.getWriter_Id());
+    return dbPassword.equals(inputPassword);
+}
+
+// [Mapper]
+String findPasswordByWriterId(long writerId);
+
+<!-- [MyBatis XML] 작성자 비밀번호 조회 -->
+<select id="findPasswordByWriterId" resultType="String">
+    SELECT PASSWORD FROM MEMBERS WHERE MEMBERNUM = #{writerId}
+</select>
+
+
+4. 문의 상세 조회
+// [Controller] 상세 조회
+@PostMapping("/enterSupport")
+public TbSupport enterSupport(@RequestBody Map<String, String> supportIdMap) {
+    return supportService.selectSupport(supportIdMap);
+}
+
+// [Service] 문의글 단건 조회
+public TbSupport selectSupport(Map<String, String> supportIdMap) {
+    return supportMapper.findById(supportIdMap.get("supportId"));
+}
+
+// [Mapper]
+TbSupport findById(String supportId);
+
+<!-- [MyBatis XML] 문의글 단건 조회 -->
+<select id="findById" resultType="kr.co.jetsetgo.model.TbSupport">
+    SELECT * FROM SUPPORT WHERE SUPPORT_ID = #{id}
+</select>
 
 ```
 </details>
+
+- 카테고리 분류: total(전체)/ticket(항공권)/baggage(수하물) 등 카테고리별 필터링
+- 작성자 식별: 작성자 이름(writer_Name) → DB에서 writer_Id로 변환해 저장
+- 비공개 글 처리: 비밀번호는 사용자 계정 비밀번호와 연동 (로그인 사용자 전용)
+- REST API: 프론트엔드에서 JSON 요청으로 모든 기능 연동 가능
 <br><br>
 
 >문의글 수정![문의2](https://github.com/user-attachments/assets/f961cbfd-5d98-4b84-9502-703d30f1268d)
@@ -458,14 +604,39 @@ boolean cancelReservation(String id);
 </summary>
 
 ```
+// [Controller] 문의글 수정
+@PostMapping("/supportEdit")
+public boolean supportEdit(@RequestBody TbSupport support) {
+    return supportService.updateSupport(support);
+}
 
+// [Service] 문의글 정보 갱신
+public boolean updateSupport(TbSupport support) {
+    supportMapper.editSupport(support);
+    return true;
+}
+
+// [Mapper]
+void editSupport(TbSupport support);
+
+<!-- [MyBatis XML] 문의글 수정 쿼리 -->
+<update id="editSupport">
+    UPDATE SUPPORT
+    SET TITLE = #{title}, DETAIL = #{detail}, PUBLIC_STATUS = #{public_Status}, CATEGORY = #{category}, ANSWER = #{answer}
+    WHERE SUPPORT_ID = #{support_Id}
+</update>
 
 ```
 </details>
 
+- 클라이언트가 수정할 문의글의 id와 새 데이터(title, detail 등)를 전달
+- 컨트롤러에서 서비스의 updateSupport 호출
+- 서비스에서 매퍼의 editSupport 실행 → DB에서 해당 SUPPORT_ID의 데이터 수정
+- 성공 시 true 반환
+
 ---
 
-### 항공권 조회 (BookingPage.vue)
+### 항공권 조회
 
 >출발지&도착지 자동완성 기능, 항공편 검색![검색1](https://github.com/user-attachments/assets/cb1916d4-748e-4e83-9558-75f7dd1c3525)
 <details><summary> 주요 코드
@@ -514,7 +685,7 @@ boolean cancelReservation(String id);
 
 ---
 
-### 항공권 예매 (BookingDetail.vue)
+### 항공권 예매
 
 >승객 정보 입력 후 결제![예매1](https://github.com/user-attachments/assets/1cfc4cb1-061a-4dbd-abd0-8b853690ec80)
 
@@ -529,7 +700,7 @@ boolean cancelReservation(String id);
 
 ---
 
-### 항공권 결제 (BookingDetail.vue)
+### 항공권 결제
 
 >아임포트(포트원) API 이용하여 결제 ![결제1](https://github.com/user-attachments/assets/06af637d-71de-4e83-9d6a-2aabfecc6507)
 
