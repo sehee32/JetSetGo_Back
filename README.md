@@ -693,8 +693,8 @@ public static String searchFlights(...) throws IOException {
     for (flight in 응답데이터) {
         resultArray.put({
             "id": "A12345",
-            "departureTime": "2024-01-01T12:00:00",
-            "arrivalTime": "2024-01-01T15:00:00",
+            "departureTime": "2025-01-01T12:00:00",
+            "arrivalTime": "2025-01-05T15:00:00",
             "price": "250000"
         });
     }
@@ -727,14 +727,9 @@ nonStop: 직항 여부 (true/false)
 
 
 >항공편 목록 정렬, 페이징 기능![검색2](https://github.com/user-attachments/assets/5fb531ee-abea-4b05-b9e0-82a69e4321ee)
-<details><summary> 주요 코드
-</summary>
 
-```
+- 프론트엔드에서 작성
 
-
-```
-</details>
 <br><br>
 
 >항공편 검색 조건 변경 후 재검색![검색3](https://github.com/user-attachments/assets/6a56866f-de94-44ce-a3b8-7d3e5a5d160d)
@@ -742,21 +737,48 @@ nonStop: 직항 여부 (true/false)
 </summary>
 
 ```
+// [Controller] 항공편 검색 API
+@GetMapping("/search")
+public String searchFlights(
+    @RequestParam String origin,
+    @RequestParam String destination,
+    @RequestParam String departureDate,
+    @RequestParam int adults,
+    @RequestParam int children,
+    @RequestParam String travelClass,
+    @RequestParam boolean nonStop
+) throws IOException {
+    // 변경된 조건을 파라미터로 받아 Amadeus API 재호출
+    return ApiUtil.searchFlights(origin, destination, departureDate, adults, children, travelClass, nonStop);
+}
 
 
+// [API Util] Amadeus API 호출
+public static String searchFlights(
+    String origin, String destination, String departureDate,
+    int adults, int children, String travelClass, boolean nonStop
+) throws IOException {
+    // ... (토큰 발급 및 API URL 조립)
+    String urlString = String.format(
+        "https://test.api.amadeus.com/v2/shopping/flight-offers?" +
+        "originLocationCode=%s&destinationLocationCode=%s&departureDate=%s" +
+        "&adults=%d&children=%d&travelClass=%s&nonStop=%s&max=30&currencyCode=KRW",
+        origin, destination, departureDate, adults, children, travelClass, nonStop
+    );
+    // ... (API 호출 및 결과 반환)
+}
 ```
 </details>
+
+- 사용자가 검색 조건(출발지, 도착지, 날짜, 인원 등)을 변경
+- 프론트엔드에서 새로운 조건으로 /api/flights/search 엔드포인트에 요청
+- 백엔드 컨트롤러에서 변경된 파라미터를 받아 Amadeus API를 다시 호출
+- 변경된 조건에 맞는 항공편 목록을 반환
 <br><br>
 
 >항공편 선택 후 정보 입력 페이지로 데이터 라우팅![검색4](https://github.com/user-attachments/assets/cecc9d71-6576-422f-b5dc-fbba00b14374)
-<details><summary> 주요 코드
-</summary>
 
-```
-
-
-```
-</details>
+- 프론트엔드에서 작성
 
 
 ---
@@ -769,10 +791,89 @@ nonStop: 직항 여부 (true/false)
 </summary>
 
 ```
+[Controller] 예약 생성 요청 처리
+@PostMapping
+public ResponseEntity<String> createReservation(@RequestBody Map<String, Object> reservationData) {
+    // 프론트에서 전달받은 flightIds(항공편 ID 배열) 추출
+    List<?> flightIdObjects = (List<?>) reservationData.get("flightIds");
+    List<Long> flightIds = new ArrayList<>();
+    for(Object id : flightIdObjects) {
+        flightIds.add(Long.parseLong(id.toString()));
+    }
+    // 예약 저장 서비스 호출
+    reservationService.insertReservation(reservationData, flightIds);
+    return ResponseEntity.ok("Reservation 성공");
+}
 
+[Service] 예약 및 항공편 저장 처리
+public void insertReservation(Map<String, Object> reservationData, List<Long> flightIds) {
+    // 1. 예약 데이터 DTO로 변환 (status는 프론트에서 "예약대기"로 전송)
+    TbReservation reservation = mapToReservation(reservationData);
+
+    // 2. 각 항공편 ID별로 예약 저장
+    for (Long flightId : flightIds) {
+        reservation.setFlight_Id(flightId);
+        reservationMapper.insertReservation(reservation); // RESERVATION 테이블에 저장
+    }
+}
+
+// 항공편 저장 (결제 전 단계에서 별도 호출)
+public List<Long> saveFlights(List<Map<String, String>> flightData) {
+    List<Long> flightIds = new ArrayList<>();
+    for (Map<String, String> flightDetail : flightData) {
+        TbFlights flight = new TbFlights();
+        // 출발/도착 시간 등 필드 매핑
+        // ... (생략)
+        myPageMapper.checkAndAddFlight(flight); // 중복 없으면 insert
+        Long savedFlightId = myPageMapper.getFlightIdIfExists(flight);
+        flightIds.add(savedFlightId);
+    }
+    return flightIds;
+}
+
+[Mapper] 항공편/예약 저장 쿼리
+<!-- FLIGHTS 테이블: 항공편 중복 체크 후 저장 -->
+<insert id="checkAndAddFlight" parameterType="kr.co.jetsetgo.model.TbFlights" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO FLIGHTS (DEPARTURE_TIME, ARRIVAL_TIME, ORIGINLOCATIONCODE, DESTINATIONLOCATIONCODE, DEPARTURE_CITY, ARRIVAL_CITY)
+    SELECT #{departureTime}, #{arrivalTime}, #{originlocationcode}, #{destinationlocationcode}, #{departureCity}, #{arrivalCity}
+    FROM dual
+    WHERE NOT EXISTS (
+        SELECT ID FROM FLIGHTS
+        WHERE DEPARTURE_TIME = #{departureTime}
+          AND ARRIVAL_TIME = #{arrivalTime}
+          AND ORIGINLOCATIONCODE = #{originlocationcode}
+          AND DESTINATIONLOCATIONCODE = #{destinationlocationcode}
+          AND DEPARTURE_CITY = #{departureCity}
+          AND ARRIVAL_CITY = #{arrivalCity}
+    );
+</insert>
+
+<!-- RESERVATION 테이블: 예약 데이터 저장 -->
+<insert id="insertReservation" parameterType="kr.co.jetsetgo.model.TbReservation">
+    INSERT INTO RESERVATION
+    (MEMBER_ID, RESERVATION_ID, FLIGHT_ID, STATUS, TRIP_TYPE, RESERVATION_DATE,
+     PASSENGER_NAME, PHONE_NUMBER, PASSPORT_NUMBER, PASSPORT_EXPIRYDATE,
+     PASSPORT_ISSUINGCOUNTRY, PAYMENT_AMOUNT, PAYMENT_METHOD, NONSTOP,
+     TRAVELCLASS, ADULTS, CHILDREN)
+    VALUES
+    (#{member_Id}, #{reservation_Id}, #{flight_Id}, #{status}, #{trip_Type}, #{reservation_Date},
+     #{passenger_Name}, #{phone_Number}, #{passport_Number}, #{passport_Expirydate},
+     #{passport_Issuingcountry}, #{payment_Amount}, #{payment_Method}, #{nonstop},
+     #{travelclass}, #{adults}, #{children})
+</insert>
 
 ```
 </details>
+
+**결제하기 버튼 클릭 시**
+- 프론트엔드에서 항공편 정보(FLIGHT)와 예약 정보(RESERVATION), 그리고 status="예약대기" 포함해서 전송
+- 컨트롤러에서 flightIds와 예약 데이터 분리
+- 서비스에서 항공편 데이터는 FLIGHTS 테이블에, 예약 데이터는 각 항공편별로 RESERVATION 테이블에 저장
+- status 컬럼은 프론트에서 받은 "예약대기" 그대로 저장
+<br><br><br>
+
+- 항공편 데이터는 중복 저장 방지 로직(checkAndAddFlight)으로 처리
+- 예약 데이터는 각 승객/항공편별로 여러 건 생성될 수 있음
 
 ---
 
