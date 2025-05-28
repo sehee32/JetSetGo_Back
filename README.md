@@ -869,7 +869,7 @@ public List<Long> saveFlights(List<Map<String, String>> flightData) {
 - 프론트엔드에서 항공편 정보(FLIGHT)와 예약 정보(RESERVATION), 그리고 status="예약대기" 포함해서 전송
 - 컨트롤러에서 flightIds와 예약 데이터 분리
 - 서비스에서 항공편 데이터는 FLIGHTS 테이블에, 예약 데이터는 각 항공편별로 RESERVATION 테이블에 저장
-- status 컬럼은 프론트에서 받은 "예약대기" 그대로 저장
+- status 컬럼은 프론트에서 받은 "예약대기"로 저장
 <br><br><br>
 
 - 항공편 데이터는 중복 저장 방지 로직(checkAndAddFlight)으로 처리
@@ -885,7 +885,74 @@ public List<Long> saveFlights(List<Map<String, String>> flightData) {
 </summary>
 
 ```
+// 프론트엔드에서 결제창 호출 (BookingDetail.vue)
+async Payment() {
+  const IMP = window.IMP;
 
+  IMP.init("imp12777257"); // Portone 가맹점 코드
+IMP.request_pay({
+    pg: "kakaopay",
+    merchant_uid: "uid_" + this.member_Id + date,
+    name: "항공권 예약",
+    pay_method: "card",
+    amount: this.totalPrice
+  }, async (rsp) => {
+
+    // 결제 성공 시 서버에 결제 정보 전송 (예약 상태 '예약확정'으로 변경)
+    if (rsp.success) {
+      for (let i = 0; i < this.passengers.length; i++) {
+        await axios.post('/api/payment', {
+          reservation_Id: `${this.member_Id}_${this.passengers[i].passengerName}_${date}`,
+          status: true,
+          amount: this.totalPrice
+        });
+      }
+      this.$router.push({
+        path: "/paymentcompleted",
+        query: {
+          amount: this.totalPrice,
+          paymentMethod: "카드",
+          reservationId: `${this.member_Id}_${this.passengers[0].passengerName}_${date}`
+        }
+      });
+ }
+
+// [Controller] 결제 정보 저장 및 상태 변경
+@PostMapping("/payment")
+public boolean updatePayment(@RequestBody Map<String, String> data) {
+    paymentService.updatePayment(data);
+    return true;
+}
+
+// [Service] 예약 상태 '예약확정'으로 업데이트
+public void updatePayment(Map<String, String> data) {
+    paymentMapper.updateReservationFlghts(data.get("reservation_Id"));
+}
+
+<!-- [Mapper XML] 결제 완료 시 예약 상태 변경 -->
+<update id="updateReservationFlghts">
+    UPDATE RESERVATION
+    SET STATUS = '예약확정'
+    WHERE RESERVATION_ID = #{reservation_Id}
+</update>
+
+
+[Util] Portone API 토큰 발급 및 결제 검증
+// PortoneApiUtil.java
+public static String getToken() throws IOException {
+    // imp_key, imp_secret로 액세스 토큰 발급
+    // POST https://api.iamport.kr/users/getToken
+    // ... (JSON 파라미터, 응답에서 access_token 추출)
+}
+
+public static String getPortOneApi(String url, String type, Map<String, String> param) throws IOException {
+    // Authorization: Bearer {access_token} 헤더로 Portone API 호출
+    // ... (POST/GET/DELETE 등 타입별 처리)
+}
 
 ```
 </details>
+
+- IMP.request_pay로 결제창 호출
+- 결제 성공 시 /api/payment에 예약ID 전송 → 예약 상태 '예약확정'으로 변경
+- Portone(아임포트) API 연동은 토큰 발급, 결제 검증, 금액 사전등록 등에 사용
